@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ccacffc50c6e445863c13572eee0f7, type: 3}
+  m_Name: ScoutPlayerData
+  m_EditorClassIdentifier: 
+  PlayerTypeId: 0
+  Health: 100
+  Damage: 20
+  Ammo: 50
+  SpeedFactor: 2
+  MoveSpeed: 0.01
+  RotateSpeed: 2000
+  AttackCooldown: 0.2
+  ReloadCooldown: 1
+  Image: {fileID: 2063644692, guid: e02e82c2edd98c049999414e64cac17d, type: 3}
+  PrefabReference:
+    m_AssetGUID: efa1b80b36645e3419157009a32f01e9
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

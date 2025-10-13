@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef89fce3168367c469102dd662a13a7f, type: 3}
+  m_Name: Ranged Enemy Data
+  m_EditorClassIdentifier: 
+  EnemyTypeId: 20
+  Health: 50
+  Damage: 20
+  BoostFactor: 0.1
+  MoveSpeed: 5
+  RotateSpeed: 1600
+  Acceleration: 10
+  StoppingDistance: 6
+  Cleavage: 0.625
+  AttackCooldown: 2
+  PrefabReference:
+    m_AssetGUID: 5622f6a3a68ab6e43bd112d607905df4
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  KillValue: 24

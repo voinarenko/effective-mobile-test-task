@@ -1,0 +1,17 @@
+﻿// ReSharper disable once RedundantUsingDirective
+using UnityEngine;
+
+namespace Code.Data
+{
+  public static class Utils
+  {
+    public static void Quit()
+    {
+#if UNITY_EDITOR
+      UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+      Application.Quit();
+#endif
+    }
+  }
+}
