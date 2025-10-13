@@ -14,6 +14,6 @@ namespace Code.Services.Input
       _controls.Enable();
     }
 
-    public PlayerInputActions Actions() => _controls;
+    public PlayerInputActions GetActions() => _controls;
   }
 }

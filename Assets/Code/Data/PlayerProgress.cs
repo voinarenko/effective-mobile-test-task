@@ -6,6 +6,8 @@ namespace Code.Data
   public class PlayerProgress
   {
     public int Level = 1;
+    public float CurrentHealth;
+    public float MaxHealth;
 
     public void Reset()
     {

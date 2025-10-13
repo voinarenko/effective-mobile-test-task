@@ -2,6 +2,6 @@
 {
     public interface IInputService : IService
     {
-        PlayerInputActions Actions();
+        PlayerInputActions GetActions();
     }
 }
