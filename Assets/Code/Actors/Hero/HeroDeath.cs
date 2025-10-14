@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Code.Data;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,31 +14,36 @@ namespace Code.Actors.Hero
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private HeroHealth _health;
     [SerializeField] private HeroMove _move;
-    [SerializeField] private HeroLook look;
+    [SerializeField] private HeroLook _look;
     [SerializeField] private HeroShoot _attack;
     [SerializeField] private HeroAnimate _animator;
-    [SerializeField] private GameObject _deathFx;
 
     private bool _isDead;
+    private PlayerProgress _progress;
 
+    public void Construct(PlayerProgress progress)
+    {
+      _progress = progress;
+    }
+    
     private void Start() =>
-      _health.HealthChanged += HealthChanged;
+      _progress.HealthChanged += OnHealthChanged;
 
     private void OnDestroy() =>
-      _health.HealthChanged -= HealthChanged;
+      _progress.HealthChanged -= OnHealthChanged;
 
-    private void HealthChanged()
+    private void OnHealthChanged()
     {
-      if (!_isDead && _health.Current <= 0) Die();
+      if (!_isDead && _health.Current <= 0) 
+        Die();
     }
 
     private void Die()
     {
       _isDead = true;
       _move.enabled = false;
-      look.enabled = false;
+      _look.enabled = false;
       _attack.enabled = false;
-      _animator.PlayDeath();
       tag = DeadTag;
       Happened?.Invoke(this);
     }

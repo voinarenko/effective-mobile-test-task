@@ -75,6 +75,10 @@ namespace Code.Infrastructure.Factory
           pov.ResetDirection(HeroTransform.forward);
         }
       }
+      if (go.TryGetComponent<HeroHealth>(out var health)) 
+        health.Construct(_progress.Progress);
+      if (go.TryGetComponent<HeroDeath>(out var death)) 
+        death.Construct(_progress.Progress);
       return go;
     }
 
