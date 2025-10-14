@@ -9,6 +9,7 @@ using Code.Services.Input;
 using Code.Services.Progress;
 using Code.Services.Random;
 using Code.Services.StaticData;
+using Code.Services.Time;
 using Zenject;
 
 namespace Code.Infrastructure.Installers
@@ -36,6 +37,7 @@ namespace Code.Infrastructure.Installers
 
     private void BindCommonServices()
     {
+      Container.Bind<ITimeService>().To<TimeService>().AsSingle();
       Container.Bind<IRandomService>().To<UnityRandomService>().AsSingle();
       Container.Bind<IAsyncService>().To<AsyncService>().AsSingle();
       Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();

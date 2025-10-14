@@ -13,7 +13,7 @@ namespace Code.Actors.Hero
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private HeroHealth _health;
     [SerializeField] private HeroMove _move;
-    [SerializeField] private HeroRotate _rotate;
+    [SerializeField] private HeroLook look;
     [SerializeField] private HeroShoot _attack;
     [SerializeField] private HeroAnimate _animator;
     [SerializeField] private GameObject _deathFx;
@@ -35,7 +35,7 @@ namespace Code.Actors.Hero
     {
       _isDead = true;
       _move.enabled = false;
-      _rotate.enabled = false;
+      look.enabled = false;
       _attack.enabled = false;
       _animator.PlayDeath();
       tag = DeadTag;

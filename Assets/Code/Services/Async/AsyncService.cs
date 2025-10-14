@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Code.Services.Time;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
 using UnityEngine;
@@ -8,9 +9,13 @@ namespace Code.Services.Async
   public class AsyncService : IAsyncService
   {
     private readonly CancellationTokenSource _cts = new();
+    private readonly ITimeService _time;
 
-    public AsyncService() =>
+    public AsyncService(ITimeService time)
+    {
+      _time = time;
       Application.quitting += OnApplicationQuitting;
+    }
 
     public async UniTask NextFrame(CancellationTokenSource cts = null)
     {
@@ -30,7 +35,7 @@ namespace Code.Services.Async
       while (elapsed < durationSeconds)
       {
         await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: _cts.Token);
-        if (!isPaused()) elapsed += Time.deltaTime;
+        if (!isPaused()) elapsed += _time.DeltaTime();
       }
     }
 

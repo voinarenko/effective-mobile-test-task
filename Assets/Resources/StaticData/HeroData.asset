@@ -12,18 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ccacffc50c6e445863c13572eee0f7, type: 3}
   m_Name: HeroData
   m_EditorClassIdentifier: 
-  PlayerTypeId: 1
   Health: 150
   Damage: 35
   Ammo: 75
   SpeedFactor: 1.5
-  MoveSpeed: 0.0075
-  RotateSpeed: 1000
+  MoveSpeed: 10
+  LookSpeed: 50
   AttackCooldown: 0.4
   ReloadCooldown: 2
-  Image: {fileID: -1960876679, guid: e02e82c2edd98c049999414e64cac17d, type: 3}
-  PrefabReference:
-    m_AssetGUID: c442743a42c50604aba433e006814463
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  Prefab: {fileID: 0}

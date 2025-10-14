@@ -11,8 +11,8 @@ namespace Code.StaticData
 
         public float SpeedFactor;
 
-        [Range(0.0025f, 0.01f)] public float MoveSpeed;
-        [Range(0, 2000)] public float RotateSpeed;
+        [Range(10, 200)] public float MoveSpeed;
+        [Range(10, 200)] public float LookSpeed;
 
         [Range(0f, 0.6f)] public float AttackCooldown;
         [Range(0, 3)] public float ReloadCooldown;

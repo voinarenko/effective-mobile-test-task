@@ -1,13 +1,18 @@
-﻿using Code.Actors.Hero;
+﻿using Cinemachine;
+using Code.Actors.Hero;
 using Code.Infrastructure.AssetManagement;
 using Code.Services.Input;
 using Code.Services.Progress;
 using Code.Services.Random;
 using Code.Services.StaticData;
+using Code.Services.Time;
 using Code.StaticData;
+using Cysharp.Threading.Tasks.Triggers;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Code.Infrastructure.Factory
 {
@@ -19,6 +24,7 @@ namespace Code.Infrastructure.Factory
     public RectTransform UIRoot { get; set; }
     public Transform StartPoint { get; set; }
     public Camera MainCamera { get; set; }
+    public CinemachineVirtualCamera VirtualCamera { get; set; }
 
     private readonly IAssets _assets;
     private readonly IRandomService _random;
@@ -26,15 +32,17 @@ namespace Code.Infrastructure.Factory
     private readonly IStaticDataService _staticData;
     private readonly IInputService _input;
     private Scene _scene;
+    private readonly ITimeService _time;
 
     public GameFactory(IAssets assets, IRandomService random, IProgressService progress, IStaticDataService staticData,
-      IInputService input)
+      IInputService input, ITimeService time)
     {
       _assets = assets;
       _random = random;
       _progress = progress;
       _staticData = staticData;
       _input = input;
+      _time = time;
     }
 
     public void SetScene(Scene scene) =>
@@ -52,13 +60,20 @@ namespace Code.Infrastructure.Factory
       var data = _staticData.GetHero();
       if (go.TryGetComponent<HeroMove>(out var move))
       {
-        move.Construct(_input);
+        move.Construct(_input, _time);
         move.Speed = data.MoveSpeed;
+        move.MainCamera = MainCamera;
       }
-      if (go.TryGetComponent<HeroRotate>(out var rotate))
+      if (go.TryGetComponent<HeroLook>(out var look))
       {
-        rotate.Construct(MainCamera, _input, _assets);
-        rotate.Speed = data.RotateSpeed;
+        look.Construct(MainCamera, _input, _assets);
+        look.Speed = data.LookSpeed;
+        VirtualCamera.Follow = look.ViewPoint;
+        if (VirtualCamera.TryGetComponent(out CinemachinePovExtension pov))
+        {
+          pov.Speed = data.LookSpeed;
+          pov.ResetDirection(HeroTransform.forward);
+        }
       }
       return go;
     }
