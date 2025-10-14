@@ -35,7 +35,7 @@ namespace Code.Actors.Hero
       pos += new Vector3(_move.x * Speed, 0, _move.y * Speed);
       if (transform) transform.position = pos;
 
-      _animator.Move(dir);
+      // _animator.Move(dir);
     }
 
     public void SetSpeed(float speed) =>

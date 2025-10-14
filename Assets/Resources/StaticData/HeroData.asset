@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8ccacffc50c6e445863c13572eee0f7, type: 3}
-  m_Name: TrooperPlayerData
+  m_Name: HeroData
   m_EditorClassIdentifier: 
   PlayerTypeId: 1
   Health: 150

@@ -18,8 +18,8 @@ namespace Code.Actors.Hero
 
     [SerializeField] private float _speed;
 
-    private void Start() =>
-      _animator.SetBool(_animIdAiming, true);
+    // private void Start() =>
+    //   _animator.SetBool(_animIdAiming, true);
 
     public void Move(Vector3 dir)
     {

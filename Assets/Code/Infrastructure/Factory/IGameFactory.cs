@@ -12,6 +12,8 @@ namespace Code.Infrastructure.Factory
     GameObject CreateEnemy(EnemyTypeId type);
     Transform HeroTransform { get; set; }
     RectTransform UIRoot { get; set; }
+    Transform StartPoint { get; set; }
+    Camera MainCamera { get; set; }
     void CleanUp();
     GameObject CreateHud();
     GameObject CreateHero();
