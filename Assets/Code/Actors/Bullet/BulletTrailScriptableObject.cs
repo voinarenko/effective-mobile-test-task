@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code.Bullet
+namespace Code.Actors.Bullet
 {
     [CreateAssetMenu(fileName = "Bullet Trail Config", menuName = "ScriptableObject/Bullet Trail Config")]
     public class BulletTrailScriptableObject : ScriptableObject

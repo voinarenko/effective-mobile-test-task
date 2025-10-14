@@ -10,6 +10,7 @@ namespace Code.Infrastructure.Installers
     private IGameFactory _gameFactory;
 
     [SerializeField] private Transform _startPoint;
+    [SerializeField] private Transform _projectilesPool;
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
     
@@ -20,6 +21,7 @@ namespace Code.Infrastructure.Installers
     public void Initialize()
     {
       _gameFactory.StartPoint = _startPoint;
+      _gameFactory.ProjectilesPool = _projectilesPool;
       _gameFactory.MainCamera = _mainCamera;
       _gameFactory.VirtualCamera = _virtualCamera;
     }

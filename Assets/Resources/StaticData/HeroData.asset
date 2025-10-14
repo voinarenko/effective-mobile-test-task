@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 150
   Damage: 35
-  Ammo: 75
-  SpeedFactor: 1.5
   MoveSpeed: 10
   LookSpeed: 50
   AttackCooldown: 0.4
-  ReloadCooldown: 2
-  Prefab: {fileID: 0}
+  ProjectileSpeed: 70
+  AttackDistance: 100

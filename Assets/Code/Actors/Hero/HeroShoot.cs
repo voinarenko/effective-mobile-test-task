@@ -1,5 +1,8 @@
-﻿using Code.Actors.Bullet;
-using Code.Bullet;
+﻿using Code.Infrastructure.Factory;
+using Code.Services.Async;
+using Code.Services.Input;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,83 +13,81 @@ namespace Code.Actors.Hero
   {
     public float Damage { get; set; }
     public float ShootDelay { get; set; }
-    public float ReloadDelay { get; set; }
+    public float BulletSpeed { get; set; }
 
-    [SerializeField] private GameObject _shootEffectPrefab;
+    public float ShotDistance { get; set; }
+
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _shootPoint;
-
     [SerializeField] private HeroAudio _heroAudio;
-    [SerializeField] private HeroAnimate _heroAnimate;
-    private PlayerInputActions _controls;
 
-    private float _shootTime = float.MinValue;
-    private float _shoot;
+    private IGameFactory _gameFactory;
+    private IInputService _input;
+    private IAsyncService _async;
 
-    public void Init(float damage, float shootDelay, float reloadDelay)
+    private bool _shootButtonHeld;
+
+    public void Construct(IGameFactory gameFactory, IInputService input, IAsyncService async)
     {
-      Damage = damage;
-      ShootDelay = shootDelay;
-      ReloadDelay = reloadDelay;
-      _controls.Player.Attack.performed += Shoot;
+      _async = async;
+      _input = input;
+      _gameFactory = gameFactory;
     }
 
-    private void Shoot(InputAction.CallbackContext context)
+    public void Init()
     {
-      if (Time.time < _shootTime + ShootDelay) return;
+      var attack = _input.GetActions().Player.Attack;
+      attack.performed += OnAttackPressed;
+      attack.canceled += OnAttackReleased;
+    }
 
-      _shootTime = Time.time;
-      Fire();
+    private void OnAttackPressed(InputAction.CallbackContext context)
+    {
+      if (_shootButtonHeld) return;
+
+      _shootButtonHeld = true;
+      ShootLoopAsync().Forget();
+    }
+
+    private void OnAttackReleased(InputAction.CallbackContext context) =>
+      _shootButtonHeld = false;
+
+    private async UniTaskVoid ShootLoopAsync()
+    {
+      while (_shootButtonHeld)
+      {
+        Fire();
+        await _async.WaitForSeconds(ShootDelay);
+      }
     }
 
     private void Fire()
     {
-      if (_shootEffectPrefab != null)
-      {
-        var effect = Instantiate(_shootEffectPrefab, _shootPoint.position, _shootPoint.rotation);
-      }
+      var origin = _shootPoint.position;
+      var direction = _shootPoint.forward;
+      Vector3 target;
 
-      if (_bulletPrefab != null)
+      if (Physics.Raycast(origin, direction, out var hit, ShotDistance))
       {
-        var bullet = Instantiate(_bulletPrefab, _shootPoint.transform.position, transform.rotation);
-        bullet.TryGetComponent<BulletDamage>(out var bulletData);
-        bulletData.Sender = tag;
-        bulletData.Damage = Damage;
+        if (hit.collider.TryGetComponent(out IHealth health) && !hit.collider.CompareTag(tag))
+          health.TakeDamage(Damage);
+
+        target = hit.point;
       }
+      else 
+        target = direction * ShotDistance;
+      
+      var bullet = _gameFactory.GetBullet(_shootPoint);
+      bullet.transform
+        .DOMove(target, BulletSpeed)
+        .SetSpeedBased()
+        .OnComplete(() =>
+          _gameFactory.PutBullet(bullet));
 
       OnFire();
     }
 
-    private void OnFire()
-    {
-      _heroAnimate.Shoot();
+    private void OnFire() =>
       _heroAudio.Shoot();
-    }
-    
-    #region Animation methods
-
-#pragma warning disable IDE0051
-    private void OnAttackStart()
-    {
-    }
-
-    private void OnAttack()
-    {
-    }
-
-    private void OnAttackEnded()
-    {
-    }
-
-    private void OnHit()
-    {
-    }
-
-    private void OnHitEnded()
-    {
-    }
-#pragma warning restore IDE0051
-
-    #endregion
   }
 }

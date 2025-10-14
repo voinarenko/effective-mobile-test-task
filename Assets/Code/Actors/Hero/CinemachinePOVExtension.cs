@@ -2,6 +2,7 @@
 using Cinemachine;
 using Code.Services.Input;
 using Code.Services.Time;
+using System;
 using Zenject;
 
 namespace Code.Actors.Hero
@@ -9,6 +10,7 @@ namespace Code.Actors.Hero
   public class CinemachinePovExtension : CinemachineExtension
   {
     public float Speed { get; set; }
+    public event Action LookChanged;
 
     [SerializeField] private float _clampAngle = 80f;
 
@@ -39,6 +41,7 @@ namespace Code.Actors.Hero
           _startRotation.y += deltaInput.y * Speed * _time.DeltaTime();
           _startRotation.y = Mathf.Clamp(_startRotation.y, -_clampAngle, _clampAngle);
           state.RawOrientation = Quaternion.Euler(-_startRotation.y, _startRotation.x, 0f);
+          LookChanged?.Invoke();
         }
       }
     }

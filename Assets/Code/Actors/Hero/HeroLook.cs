@@ -1,37 +1,29 @@
-﻿using Code.Infrastructure.AssetManagement;
-using Code.Services.Input;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Code.Actors.Hero
 {
   public class HeroLook : MonoBehaviour
   {
-    public float Speed { get; set; }
     public Transform ViewPoint;
+    private CinemachinePovExtension _cinemachinePov;
+    private Camera _mainCamera;
 
-    private const float CamRayLength = Mathf.Infinity;
-    private const float PointerPositionOffset = 0.15f;
+    private void OnDestroy() =>
+      _cinemachinePov.LookChanged -= OnLookChanged;
 
-    private static Canvas _pointer;
-    private int _groundMask;
-    private Camera _camera;
-    private IInputService _input;
-    private IAssets _assets;
-
-    public void Construct(Camera mainCamera, IInputService input, IAssets assets)
+    public void Init(Camera mainCamera, CinemachinePovExtension cinemachinePov)
     {
-      _assets = assets;
-      _input = input;
-      _camera = mainCamera;
-    }
-    
-    private void Update()
-    {
+      _mainCamera = mainCamera;
+      _cinemachinePov = cinemachinePov;
+      _cinemachinePov.LookChanged += OnLookChanged;
     }
 
-    private void Look()
+    private void OnLookChanged()
     {
-      
+      ViewPoint.rotation = Quaternion.Euler(
+        _mainCamera.transform.eulerAngles.x,
+        _mainCamera.transform.eulerAngles.y,
+        _mainCamera.transform.eulerAngles.z);
     }
   }
 }

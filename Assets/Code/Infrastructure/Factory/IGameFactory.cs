@@ -14,10 +14,11 @@ namespace Code.Infrastructure.Factory
     Transform StartPoint { get; set; }
     Camera MainCamera { get; set; }
     CinemachineVirtualCamera VirtualCamera { get; set; }
+    Transform ProjectilesPool { get; set; }
     void CleanUp();
     GameObject CreateHud();
     GameObject CreateHero();
-    void SetScene(Scene scene);
-    Scene GetScene();
+    GameObject GetBullet(Transform shootPoint);
+    void PutBullet(GameObject bullet);
   }
 }
