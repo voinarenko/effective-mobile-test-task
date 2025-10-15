@@ -102,7 +102,7 @@ namespace Code.Infrastructure.Factory
       return go;
     }
 
-    public GameObject CreateEnemy(EnemyTypeId type)
+    public GameObject CreateEnemy(EnemyTypeId type, Transform at)
     {
       var enemy = _staticData.GetEnemy(type);
       var go = Object.Instantiate(enemy.Prefab);

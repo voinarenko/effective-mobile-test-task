@@ -1,4 +1,5 @@
 ﻿using Code.StaticData;
+using System.Collections.Generic;
 
 namespace Code.Services.StaticData
 {
@@ -8,5 +9,6 @@ namespace Code.Services.StaticData
     void LoadHero();
     EnemyStaticData GetEnemy(EnemyTypeId type);
     HeroStaticData GetHero();
+    Dictionary<EnemyTypeId, EnemyStaticData> GetEnemies();
   }
 }

@@ -17,6 +17,9 @@ namespace Code.Services.StaticData
         .LoadAll<EnemyStaticData>("StaticData/Enemies")
         .ToDictionary(x => x.EnemyTypeId, x => x);
 
+    public Dictionary<EnemyTypeId, EnemyStaticData> GetEnemies() =>
+      _enemies;
+    
     public EnemyStaticData GetEnemy(EnemyTypeId type) =>
       _enemies[type];
 

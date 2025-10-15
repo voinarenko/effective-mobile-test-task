@@ -7,8 +7,10 @@ namespace Code.Data
   {
     public event Action HealthChanged;
 
-    public int Level = 1;
+    public WaveData WaveData = new();
 
+    public int Level = 1;
+    public float MaxHealth;
     public float CurrentHealth
     {
       get => _currentHealth;
@@ -18,11 +20,7 @@ namespace Code.Data
         HealthChanged?.Invoke();
       }
     }
-
-    public float MaxHealth;
-
     private float _currentHealth;
-
 
     public void Reset()
     {

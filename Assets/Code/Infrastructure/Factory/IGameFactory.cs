@@ -2,13 +2,12 @@
 using Code.Services;
 using Code.StaticData;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Code.Infrastructure.Factory
 {
   public interface IGameFactory : IService
   {
-    GameObject CreateEnemy(EnemyTypeId type);
+    GameObject CreateEnemy(EnemyTypeId type, Transform at);
     Transform HeroTransform { get; set; }
     RectTransform UIRoot { get; set; }
     Transform StartPoint { get; set; }

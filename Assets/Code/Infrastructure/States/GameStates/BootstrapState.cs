@@ -1,8 +1,8 @@
 ﻿using Code.Infrastructure.Loading;
 using Code.Infrastructure.States.StateMachine;
 using Code.Infrastructure.States.StatesInfrastructure;
+using Code.Services.Random;
 using Code.Services.StaticData;
-using DG.Tweening;
 
 namespace Code.Infrastructure.States.GameStates
 {
@@ -13,9 +13,12 @@ namespace Code.Infrastructure.States.GameStates
     private readonly ISceneLoader _sceneLoader;
     private readonly IStaticDataService _staticData;
     private readonly ILoadingCurtain _curtain;
+    private readonly IRandomService _random;
 
-    public BootstrapState(IGameStateMachine stateMachine, ISceneLoader sceneLoader, IStaticDataService staticData, ILoadingCurtain curtain)
+    public BootstrapState(IGameStateMachine stateMachine, ISceneLoader sceneLoader, IStaticDataService staticData,
+      ILoadingCurtain curtain, IRandomService random)
     {
+      _random = random;
       _curtain = curtain;
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
@@ -35,6 +38,7 @@ namespace Code.Infrastructure.States.GameStates
     private void OnLoad()
     {
       LoadStaticData();
+      _random.FillWeights(_staticData.GetEnemies());
       _stateMachine.Enter<ProgressLoadState>();
     }
 

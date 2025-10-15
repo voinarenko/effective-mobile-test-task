@@ -38,7 +38,7 @@ namespace Code.Infrastructure.Installers
     private void BindCommonServices()
     {
       Container.Bind<ITimeService>().To<TimeService>().AsSingle();
-      Container.Bind<IRandomService>().To<UnityRandomService>().AsSingle();
+      Container.Bind<IRandomService>().To<RandomService>().AsSingle();
       Container.Bind<IAsyncService>().To<AsyncService>().AsSingle();
       Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
       Container.Bind<ILoadingCurtain>()

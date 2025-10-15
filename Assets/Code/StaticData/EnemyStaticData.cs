@@ -30,5 +30,6 @@ namespace Code.StaticData
         public float AttackCooldown;
 
         public GameObject Prefab;
+        [Range(0, 1000)] public int SpawnWeight;
     }
 }

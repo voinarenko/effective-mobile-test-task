@@ -21,10 +21,6 @@ MonoBehaviour:
   Acceleration: 15
   StoppingDistance: 2
   Cleavage: 0.625
-  AttackCooldown: 0
-  PrefabReference:
-    m_AssetGUID: 66aa806679523be47bf7ee72329a56c7
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  KillValue: 12
+  AttackCooldown: 1
+  Prefab: {fileID: 0}
+  SpawnWeight: 500
