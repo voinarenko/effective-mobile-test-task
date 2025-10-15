@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using Code.Actors.Enemies;
 using Code.Actors.Hero;
 using Code.Infrastructure.AssetManagement;
 using Code.Services.Async;
@@ -10,12 +11,14 @@ using Code.Services.Time;
 using Code.StaticData;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Code.Infrastructure.Factory
 {
   public class GameFactory : IGameFactory
   {
     public Transform HeroTransform { get; set; }
+    public HeroDeath HeroDeath { get; set; }
     public RectTransform UIRoot { get; set; }
     public Transform StartPoint { get; set; }
     public Transform ProjectilesPool { get; set; }
@@ -34,6 +37,7 @@ namespace Code.Infrastructure.Factory
     private readonly Queue<GameObject> _enemySmallPool = new();
     private readonly Queue<GameObject> _enemyBigPool = new();
     private readonly Queue<GameObject> _enemyRangedPool = new();
+
 
     public GameFactory(IAssets assets, IRandomService random, IProgressService progress, IStaticDataService staticData,
       IInputService input, ITimeService time, IAsyncService async)
@@ -89,9 +93,16 @@ namespace Code.Infrastructure.Factory
         }
       }
       if (go.TryGetComponent<HeroHealth>(out var health))
+      {
         health.Construct(_progress.Progress);
+        health.Current = data.Health;
+        health.Max = data.Health;
+      }
       if (go.TryGetComponent<HeroDeath>(out var death))
+      {
         death.Construct(_progress.Progress);
+        HeroDeath = death;
+      }
       if (go.TryGetComponent<HeroShoot>(out var shoot))
       {
         shoot.Construct(this, _input, _async);
@@ -103,7 +114,7 @@ namespace Code.Infrastructure.Factory
       }
       return go;
     }
-    
+
     public GameObject GetEnemy(EnemyTypeId type, Transform at)
     {
       var pool = SelectEnemyPool(type);
@@ -132,6 +143,38 @@ namespace Code.Infrastructure.Factory
     {
       var enemy = _staticData.GetEnemy(type);
       var go = _assets.Instantiate(enemy.Prefab, at);
+      
+      if (go.TryGetComponent<EnemyMove>(out var move))
+      {
+        move.HeroTransform = HeroTransform;
+        move.HeroDeath = HeroDeath;
+        move.Init();
+      }
+      if (go.TryGetComponent<EnemyHealth>(out var health))
+      {
+        health.Max = enemy.Health;
+        health.Current = enemy.Health;
+      }
+      if (go.TryGetComponent<NavMeshAgent>(out var agent))
+      {
+        agent.speed = enemy.MoveSpeed;
+        agent.stoppingDistance = enemy.StoppingDistance;
+        agent.angularSpeed = enemy.RotateSpeed;
+        agent.acceleration = enemy.Acceleration;
+        agent.destination = HeroTransform.position;
+      }
+      if (go.TryGetComponent<EnemyAttack>(out var attack))
+      {
+        attack.Construct(HeroTransform);
+        attack.Type = enemy.EnemyTypeId;
+        attack.Damage = enemy.Damage;
+        attack.Cleavage = enemy.Cleavage;
+        attack.AttackCooldown = enemy.AttackCooldown;
+      }
+      if (go.TryGetComponent<EnemyDeath>(out var death))
+      {
+        death.Construct(_progress.Progress);
+      }
       return go;
     }
 

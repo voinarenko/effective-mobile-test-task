@@ -6,7 +6,7 @@ using Action = System.Action;
 
 namespace Code.Actors.Enemies
 {
-  [RequireComponent(typeof(EnemyHealth), typeof(EnemyAnimator), typeof(NavMeshAgent))]
+  [RequireComponent(typeof(EnemyHealth), typeof(EnemyAnimate), typeof(NavMeshAgent))]
   public class EnemyDeath : MonoBehaviour
   {
     public event Action Happened;
@@ -17,9 +17,9 @@ namespace Code.Actors.Enemies
     [SerializeField] private GameObject _pickupPopup;
 
     private PlayerProgress _progress;
-    private EnemyMoveToHero _mover;
+    private EnemyMove _mover;
     private EnemyHealth _health;
-    private EnemyAnimator _animator;
+    private EnemyAnimate _animate;
     private NavMeshAgent _agent;
     private EnemyAttack _attack;
     private BoxCollider _collider;
@@ -31,9 +31,9 @@ namespace Code.Actors.Enemies
 
     private void Start()
     {
-      _mover = GetComponent<EnemyMoveToHero>();
+      _mover = GetComponent<EnemyMove>();
       _health = GetComponent<EnemyHealth>();
-      _animator = GetComponent<EnemyAnimator>();
+      _animate = GetComponent<EnemyAnimate>();
       _agent = GetComponent<NavMeshAgent>();
       _attack = GetComponent<EnemyAttack>();
       _collider = GetComponentInChildren<BoxCollider>();
@@ -57,7 +57,7 @@ namespace Code.Actors.Enemies
       _agent.updateRotation = false;
       _agent.speed = 0;
       _attack.enabled = false;
-      _animator.PlayDeath();
+      _animate.PlayDeath();
       Destroy(gameObject, TimeToDestroy);
     }
 

@@ -7,7 +7,7 @@ namespace Code.Actors.Hero
 {
   public class HeroDeath : MonoBehaviour
   {
-    public event Action<HeroDeath> Happened;
+    public event Action Happened;
 
     private const string DeadTag = "Dead";
 
@@ -45,12 +45,10 @@ namespace Code.Actors.Hero
       _look.enabled = false;
       _attack.enabled = false;
       tag = DeadTag;
-      Happened?.Invoke(this);
+      Happened?.Invoke();
     }
 
-#pragma warning disable IDE0051
     private void OnDeath() =>
       _agent.isStopped = true;
-#pragma warning restore IDE0051
   }
 }

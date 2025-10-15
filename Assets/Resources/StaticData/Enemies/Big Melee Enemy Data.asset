@@ -22,5 +22,5 @@ MonoBehaviour:
   StoppingDistance: 3
   Cleavage: 0.75
   AttackCooldown: 3
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 5208285495415958658, guid: 4d03485955660d14d952754d07e5f603, type: 3}
   SpawnWeight: 100

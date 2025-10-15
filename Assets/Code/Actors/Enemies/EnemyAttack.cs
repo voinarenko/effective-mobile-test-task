@@ -7,7 +7,7 @@ using Action = System.Action;
 
 namespace Code.Actors.Enemies
 {
-  [RequireComponent(typeof(EnemyAnimator))]
+  [RequireComponent(typeof(EnemyAnimate))]
   public class EnemyAttack : MonoBehaviour
   {
     public event Action Completed;
@@ -16,15 +16,15 @@ namespace Code.Actors.Enemies
     public float Cleavage { get; set; }
     public float Damage { get; set; }
 
-    private const string PlayerLayerMask = "Player";
     private const string PlayerTag = "Player";
     private const float AttackTime = 0.1f;
 
+    [SerializeField] private EnemyMove _move;
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private EnemyAudio _audio;
     [SerializeField] private GameObject _shootEffectPrefab;
     [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] private EnemyAnimator _animator;
+    [SerializeField] private EnemyAnimate _animate;
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private List<Transform> _hitPoints;
 
@@ -41,8 +41,8 @@ namespace Code.Actors.Enemies
     public void Construct(Transform playerTransform) =>
       _playerTransform = playerTransform;
 
-    private void Awake() =>
-      _layerMask = 1 << LayerMask.NameToLayer(PlayerLayerMask);
+    private void OnEnable() =>
+      _move.Completed += EnableAttack;
 
     private void Start() =>
       _savedSpeed = _agent.speed;
@@ -54,17 +54,21 @@ namespace Code.Actors.Enemies
         StartAttack();
     }
 
-#pragma warning disable IDE0051
-    private void OnAttackStart() =>
+    private void OnDisable() =>
+      _move.Completed -= EnableAttack;
+
+    private void OnAttackStart()
+    {
       _agent.speed = 0;
+    }
 
     private void OnAttack()
     {
       if (Type == EnemyTypeId.Ranged)
       {
-        if (_shootEffectPrefab != null)
+        if (_shootEffectPrefab)
           Instantiate(_shootEffectPrefab, _shootPoint.position, _shootPoint.rotation);
-        if (_bulletPrefab != null)
+        if (_bulletPrefab)
         {
           var bullet = Instantiate(_bulletPrefab, _shootPoint.transform.position, transform.rotation);
         }
@@ -113,9 +117,9 @@ namespace Code.Actors.Enemies
     {
       transform.LookAt(_playerTransform);
       if (Type == EnemyTypeId.Ranged)
-        _animator.PlayShoot();
+        _animate.PlayShoot();
       else
-        _animator.PlayAttack();
+        _animate.PlayAttack();
       _isAttacking = true;
     }
 

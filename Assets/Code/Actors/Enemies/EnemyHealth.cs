@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Code.Actors.Enemies
 {
-  [RequireComponent(typeof(EnemyAnimator))]
+  [RequireComponent(typeof(EnemyAnimate))]
   public class EnemyHealth : MonoBehaviour, IHealth
   {
     public event Action HealthChanged;
 
-    [SerializeField] private EnemyAnimator _animator;
+    [SerializeField] private EnemyAnimate animate;
 
     public float Current { get; set; }
     public float Max { get; set; }
@@ -16,7 +16,7 @@ namespace Code.Actors.Enemies
     public void TakeDamage(float damage)
     {
       Current -= damage;
-      _animator.PlayHit();
+      animate.PlayHit();
 
       HealthChanged?.Invoke();
     }

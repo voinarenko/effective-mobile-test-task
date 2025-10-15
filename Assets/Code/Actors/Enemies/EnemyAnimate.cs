@@ -2,7 +2,7 @@
 
 namespace Code.Actors.Enemies
 {
-  public class EnemyAnimator : MonoBehaviour
+  public class EnemyAnimate : MonoBehaviour
   {
     private static readonly int Die = Animator.StringToHash("Die");
     private static readonly int Hit = Animator.StringToHash("Hit");

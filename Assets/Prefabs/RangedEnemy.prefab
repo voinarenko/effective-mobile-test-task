@@ -70,6 +70,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1740678622543289402, guid: 7085a49fccb9abb449a24fb22149c75b, type: 3}
+      propertyPath: _shootPoint
+      value: 
+      objectReference: {fileID: 4218852653085819504}
     - target: {fileID: 2954913780570074599, guid: 7085a49fccb9abb449a24fb22149c75b, type: 3}
       propertyPath: m_Avatar
       value: 
@@ -162,6 +166,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5398166530373098433}
     m_Modifications:
+    - target: {fileID: 3334763856463433948, guid: 713912b46b0763b49a839f8b18f51cb5, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f1f1ae003081a1b4d9e60dda86f442b2, type: 2}
     - target: {fileID: 8353203653604872220, guid: 713912b46b0763b49a839f8b18f51cb5, type: 3}
       propertyPath: m_Name
       value: Sci_Fi_Character_08_03
@@ -206,7 +214,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3334763856463433948, guid: 713912b46b0763b49a839f8b18f51cb5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2326417097526803833, guid: 713912b46b0763b49a839f8b18f51cb5, type: 3}
