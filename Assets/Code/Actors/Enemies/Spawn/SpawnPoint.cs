@@ -22,7 +22,7 @@ namespace Code.Actors.Enemies.Spawn
 
     public void Spawn()
     {
-      _factory.CreateEnemy(_random.WeightedRange(), transform);
+      _factory.GetEnemy(_random.WeightedRange(), transform);
       _progress.Progress.WaveData.AddEnemy();
     }
   }

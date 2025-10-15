@@ -7,7 +7,8 @@ namespace Code.Infrastructure.Factory
 {
   public interface IGameFactory : IService
   {
-    GameObject CreateEnemy(EnemyTypeId type, Transform at);
+    GameObject GetEnemy(EnemyTypeId type, Transform at);
+    void PutEnemy(EnemyTypeId type, GameObject enemy);
     Transform HeroTransform { get; set; }
     RectTransform UIRoot { get; set; }
     Transform StartPoint { get; set; }

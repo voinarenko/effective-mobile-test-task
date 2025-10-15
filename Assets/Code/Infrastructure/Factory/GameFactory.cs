@@ -31,6 +31,9 @@ namespace Code.Infrastructure.Factory
     private readonly IAsyncService _async;
 
     private readonly Queue<GameObject> _bulletsPool = new();
+    private readonly Queue<GameObject> _enemySmallPool = new();
+    private readonly Queue<GameObject> _enemyBigPool = new();
+    private readonly Queue<GameObject> _enemyRangedPool = new();
 
     public GameFactory(IAssets assets, IRandomService random, IProgressService progress, IStaticDataService staticData,
       IInputService input, ITimeService time, IAsyncService async)
@@ -100,16 +103,36 @@ namespace Code.Infrastructure.Factory
       }
       return go;
     }
-
-    public GameObject CreateEnemy(EnemyTypeId type, Transform at)
+    
+    public GameObject GetEnemy(EnemyTypeId type, Transform at)
     {
-      var enemy = _staticData.GetEnemy(type);
-      var go = _assets.Instantiate(enemy.Prefab, at);
-      return go;
+      var pool = SelectEnemyPool(type);
+      if (pool.Count == 0)
+        return CreateEnemy(type, at);
+
+      var enemy = pool.Dequeue();
+      enemy.transform.position = at.position;
+      enemy.transform.SetParent(at);
+      enemy.SetActive(true);
+      return enemy;
+    }
+
+    public void PutEnemy(EnemyTypeId type, GameObject enemy)
+    {
+      var pool = SelectEnemyPool(type);
+      pool.Enqueue(enemy);
+      enemy.SetActive(false);
     }
 
     public void CleanUp()
     {
+    }
+
+    private GameObject CreateEnemy(EnemyTypeId type, Transform at)
+    {
+      var enemy = _staticData.GetEnemy(type);
+      var go = _assets.Instantiate(enemy.Prefab, at);
+      return go;
     }
 
     private GameObject CreateBullet(Vector3 at)
@@ -119,5 +142,14 @@ namespace Code.Infrastructure.Factory
       go.transform.SetParent(ProjectilesPool);
       return go;
     }
+
+    private Queue<GameObject> SelectEnemyPool(EnemyTypeId type) =>
+      type switch
+      {
+        EnemyTypeId.SmallMelee => _enemySmallPool,
+        EnemyTypeId.BigMelee => _enemyBigPool,
+        EnemyTypeId.Ranged => _enemyRangedPool,
+        _ => new Queue<GameObject>()
+      };
   }
 }

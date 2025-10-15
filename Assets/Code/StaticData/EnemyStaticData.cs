@@ -2,34 +2,27 @@
 
 namespace Code.StaticData
 {
-    [CreateAssetMenu(fileName = "EnemyData", menuName = "Static Data/Enemy")]
-    public class EnemyStaticData : ScriptableObject
-    {
-        public EnemyTypeId EnemyTypeId;
+  [CreateAssetMenu(fileName = "EnemyData", menuName = "Static Data/Enemy")]
+  public class EnemyStaticData : ScriptableObject
+  {
+    public EnemyTypeId EnemyTypeId;
 
-        [Range(1, 100)]
-        public int Health;
-        [Range(1, 30)]
-        public float Damage;
+    [Range(1, 100)] public int Health;
+    [Range(1, 30)] public float Damage;
 
-        public float BoostFactor = 0.1f;
+    public float BoostFactor = 0.1f;
 
-        [Range(1, 10)]
-        public float MoveSpeed;
-        [Range(1, 2000)]
-        public float RotateSpeed;
-        [Range(1,204
-            )]
-        public float Acceleration;
-        [Range(1, 6)]
-        public float StoppingDistance;
+    [Range(1, 10)] public float MoveSpeed;
+    [Range(1, 2000)] public float RotateSpeed;
 
-        [Range(0.5f, 1)]
-        public float Cleavage;
-        [Range(1, 5)]
-        public float AttackCooldown;
+    [Range(1, 204)] public float Acceleration;
 
-        public GameObject Prefab;
-        [Range(0, 1000)] public int SpawnWeight;
-    }
+    [Range(1, 6)] public float StoppingDistance;
+
+    [Range(0.5f, 1)] public float Cleavage;
+    [Range(1, 5)] public float AttackCooldown;
+
+    public GameObject Prefab;
+    [Range(0, 1000)] public int SpawnWeight;
+  }
 }
