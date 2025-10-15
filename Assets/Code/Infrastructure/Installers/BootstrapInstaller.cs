@@ -10,6 +10,7 @@ using Code.Services.Progress;
 using Code.Services.Random;
 using Code.Services.StaticData;
 using Code.Services.Time;
+using Code.Services.Wave;
 using Zenject;
 
 namespace Code.Infrastructure.Installers
@@ -47,8 +48,11 @@ namespace Code.Infrastructure.Installers
         .AsSingle();
     }
 
-    private void BindGameplayServices() =>
+    private void BindGameplayServices()
+    {
       Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
+      Container.Bind<IWaveService>().To<WaveService>().AsSingle();
+    }
 
     private void BindProgressServices() =>
       Container.Bind<IProgressService>().To<ProgressService>().AsSingle();

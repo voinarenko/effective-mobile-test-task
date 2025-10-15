@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef89fce3168367c469102dd662a13a7f, type: 3}
   m_Name: Ranged Enemy Data
   m_EditorClassIdentifier: 
-  EnemyTypeId: 20
+  EnemyTypeId: 15
   Health: 50
   Damage: 20
   BoostFactor: 0.1

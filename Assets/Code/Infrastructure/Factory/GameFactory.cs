@@ -10,7 +10,6 @@ using Code.Services.Time;
 using Code.StaticData;
 using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Code.Infrastructure.Factory
 {
@@ -49,7 +48,7 @@ namespace Code.Infrastructure.Factory
     {
       if (_bulletsPool.Count == 0)
         return CreateBullet(shootPoint.position);
-      
+
       var bullet = _bulletsPool.Dequeue();
       bullet.transform.position = shootPoint.position;
       bullet.SetActive(true);
@@ -105,7 +104,7 @@ namespace Code.Infrastructure.Factory
     public GameObject CreateEnemy(EnemyTypeId type, Transform at)
     {
       var enemy = _staticData.GetEnemy(type);
-      var go = Object.Instantiate(enemy.Prefab);
+      var go = _assets.Instantiate(enemy.Prefab, at);
       return go;
     }
 

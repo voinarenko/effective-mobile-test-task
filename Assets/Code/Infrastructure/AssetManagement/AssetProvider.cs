@@ -2,18 +2,24 @@
 
 namespace Code.Infrastructure.AssetManagement
 {
-    public class AssetProvider : IAssets
+  public class AssetProvider : IAssets
+  {
+    public GameObject Instantiate(string path)
     {
-        public GameObject Instantiate(string path)
-        {
-            var prefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(prefab);
-        }
-        
-        public GameObject Instantiate(string path, Transform at)
-        {
-            var prefab = Resources.Load<GameObject>(path);
-            return Object.Instantiate(prefab, at);
-        }
+      var prefab = Resources.Load<GameObject>(path);
+      return Object.Instantiate(prefab);
     }
+
+    public GameObject Instantiate(string path, Transform at)
+    {
+      var prefab = Resources.Load<GameObject>(path);
+      return Object.Instantiate(prefab, at);
+    }
+    
+    public GameObject Instantiate(GameObject prefab) =>
+      Object.Instantiate(prefab);
+
+    public GameObject Instantiate(GameObject prefab, Transform at) =>
+      Object.Instantiate(prefab, at);
+  }
 }

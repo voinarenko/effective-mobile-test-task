@@ -9,6 +9,7 @@ using Code.Services.Input;
 using Code.Services.Progress;
 using Code.Services.Random;
 using Code.Services.StaticData;
+using Code.Services.Wave;
 
 namespace Code.Infrastructure.States.GameStates
 {
@@ -25,12 +26,13 @@ namespace Code.Infrastructure.States.GameStates
     private readonly IRandomService _random;
     private readonly IAsyncService _async;
     private readonly IAssets _assets;
+    private readonly IWaveService _wave;
 
     private int _previousBlockType;
 
     public LevelLoadState(IGameStateMachine stateMachine, ISceneLoader sceneLoader, ILoadingCurtain curtain,
       IGameFactory gameFactory, IProgressService progress, IStaticDataService staticData, IInputService input,
-      IRandomService random, IAsyncService async, IAssets assets)
+      IRandomService random, IAsyncService async, IAssets assets, IWaveService wave)
     {
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
@@ -42,6 +44,7 @@ namespace Code.Infrastructure.States.GameStates
       _random = random;
       _async = async;
       _assets = assets;
+      _wave = wave;
     }
 
     public void Enter(string payload)
@@ -58,6 +61,7 @@ namespace Code.Infrastructure.States.GameStates
     private void OnLoaded()
     {
       _gameFactory.CreateHero();
+      _wave.Init();
       _stateMachine.Enter<LevelLoopState>();
     }
   }
