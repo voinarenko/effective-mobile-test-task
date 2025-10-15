@@ -1,4 +1,5 @@
-﻿using Code.StaticData;
+﻿using Code.Services.Time;
+using Code.StaticData;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Code.Actors.Enemies
     public float Cleavage { get; set; }
     public float Damage { get; set; }
 
+    private const string PlayerLayerMask = "Player";
     private const string PlayerTag = "Player";
     private const float AttackTime = 0.1f;
 
@@ -37,15 +39,22 @@ namespace Code.Actors.Enemies
     private bool _isAttacking;
     private bool _attackIsActive;
     private float _savedSpeed;
+    private ITimeService _time;
 
-    public void Construct(Transform playerTransform) =>
+    public void Construct(ITimeService time, Transform playerTransform)
+    {
+      _time = time;
       _playerTransform = playerTransform;
+    }
 
     private void OnEnable() =>
       _move.Completed += EnableAttack;
 
-    private void Start() =>
+    private void Start()
+    {
+      _layerMask = 1 << LayerMask.NameToLayer(PlayerLayerMask);
       _savedSpeed = _agent.speed;
+    }
 
     private void Update()
     {
@@ -139,7 +148,7 @@ namespace Code.Actors.Enemies
     private void UpdateCooldown()
     {
       if (!CooldownIsUp())
-        _attackCooldown -= Time.deltaTime;
+        _attackCooldown -= _time.DeltaTime();
     }
   }
 }

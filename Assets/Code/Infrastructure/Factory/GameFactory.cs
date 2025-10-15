@@ -165,7 +165,7 @@ namespace Code.Infrastructure.Factory
       }
       if (go.TryGetComponent<EnemyAttack>(out var attack))
       {
-        attack.Construct(HeroTransform);
+        attack.Construct(_time, HeroTransform);
         attack.Type = enemy.EnemyTypeId;
         attack.Damage = enemy.Damage;
         attack.Cleavage = enemy.Cleavage;
