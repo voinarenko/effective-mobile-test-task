@@ -3,6 +3,7 @@ using Code.Services.Async;
 using Code.Services.Input;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -69,20 +70,20 @@ namespace Code.Actors.Hero
 
       if (Physics.Raycast(origin, direction, out var hit, ShotDistance))
       {
-        if (hit.collider.TryGetComponent(out IHealth health) && !hit.collider.CompareTag(tag))
+        // var health = hit.collider.GetComponentInParent<IHealth>();
+        // health?.TakeDamage(Damage);
+        if (hit.transform.parent.TryGetComponent<IHealth>(out var health))
           health.TakeDamage(Damage);
-
         target = hit.point;
       }
-      else 
-        target = direction * ShotDistance;
-      
+      else
+        target = origin + direction * ShotDistance;
+
       var bullet = _gameFactory.GetBullet(_shootPoint);
       bullet.transform
         .DOMove(target, BulletSpeed)
         .SetSpeedBased()
-        .OnComplete(() =>
-          _gameFactory.PutBullet(bullet));
+        .OnComplete(() => _gameFactory.PutBullet(bullet));
 
       OnFire();
     }

@@ -40,7 +40,7 @@ namespace Code.Actors.Enemies
     {
     }
 
-    public void Reload()
+    public void PlayReload()
     {
     }
   }

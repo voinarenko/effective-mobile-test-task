@@ -10,8 +10,6 @@ namespace Code.StaticData
     [Range(1, 100)] public int Health;
     [Range(1, 30)] public float Damage;
 
-    public float BoostFactor = 0.1f;
-
     [Range(1, 10)] public float MoveSpeed;
     [Range(1, 2000)] public float RotateSpeed;
 
@@ -22,6 +20,9 @@ namespace Code.StaticData
     [Range(0.5f, 1)] public float Cleavage;
     [Range(1, 5)] public float AttackCooldown;
 
+    [Range(10, 100)] public float BulletSpeed;
+    [Range(10, 500)] public float ShotDistance;
+    
     public GameObject Prefab;
     [Range(0, 1000)] public int SpawnWeight;
   }

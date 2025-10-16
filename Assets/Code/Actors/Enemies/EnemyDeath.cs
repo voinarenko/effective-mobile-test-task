@@ -12,10 +12,6 @@ namespace Code.Actors.Enemies
     public event Action Happened;
     private const float TimeToDestroy = 3;
 
-    [SerializeField] private GameObject _deathFx;
-    [SerializeField] private TextMeshPro _lootText;
-    [SerializeField] private GameObject _pickupPopup;
-
     private PlayerProgress _progress;
     private EnemyMove _mover;
     private EnemyHealth _health;

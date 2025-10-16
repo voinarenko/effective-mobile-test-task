@@ -151,8 +151,41 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8448274562106646493, guid: 7085a49fccb9abb449a24fb22149c75b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4218852653085819504}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3792692793871577069, guid: 7085a49fccb9abb449a24fb22149c75b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1077184974554367382}
   m_SourcePrefab: {fileID: 100100000, guid: 7085a49fccb9abb449a24fb22149c75b, type: 3}
+--- !u!1 &825906060852816881 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3792692793871577069, guid: 7085a49fccb9abb449a24fb22149c75b, type: 3}
+  m_PrefabInstance: {fileID: 4599423370832856092}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1077184974554367382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825906060852816881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66cefdc42f4249b699c9aa7709accd22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shootPoint: {fileID: 4218852653085819504}
+  _audio: {fileID: 4091249590858577041}
+--- !u!114 &4091249590858577041 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 509864416557740173, guid: 7085a49fccb9abb449a24fb22149c75b, type: 3}
+  m_PrefabInstance: {fileID: 4599423370832856092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825906060852816881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f09f1d1d81147bd8f051db930122935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5398166530373098433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8448274562106646493, guid: 7085a49fccb9abb449a24fb22149c75b, type: 3}

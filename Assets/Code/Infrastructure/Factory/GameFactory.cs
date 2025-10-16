@@ -165,11 +165,14 @@ namespace Code.Infrastructure.Factory
       }
       if (go.TryGetComponent<EnemyAttack>(out var attack))
       {
-        attack.Construct(_time, HeroTransform);
+        attack.Construct(this, _time, HeroTransform);
         attack.Type = enemy.EnemyTypeId;
         attack.Damage = enemy.Damage;
         attack.Cleavage = enemy.Cleavage;
         attack.AttackCooldown = enemy.AttackCooldown;
+        attack.BulletSpeed = enemy.BulletSpeed;
+        attack.ShotDistance = enemy.ShotDistance;
+        attack.UpdateSpecificData();
       }
       if (go.TryGetComponent<EnemyDeath>(out var death))
       {

@@ -22,5 +22,7 @@ MonoBehaviour:
   StoppingDistance: 6
   Cleavage: 0.625
   AttackCooldown: 2
+  BulletSpeed: 70
+  ShotDistance: 100
   Prefab: {fileID: 825906060852816881, guid: cff84afb479c6f241956aea2541b994f, type: 3}
   SpawnWeight: 200
