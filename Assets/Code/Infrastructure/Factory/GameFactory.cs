@@ -9,6 +9,7 @@ using Code.Services.Random;
 using Code.Services.StaticData;
 using Code.Services.Time;
 using Code.StaticData;
+using Code.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -68,8 +69,16 @@ namespace Code.Infrastructure.Factory
       _bulletsPool.Enqueue(bullet);
     }
 
-    public GameObject CreateHud() =>
-      _assets.Instantiate(AssetPath.HUDPath, UIRoot);
+    public GameObject CreateHud()
+    {
+      var go = _assets.Instantiate(AssetPath.HUDPath, UIRoot);
+      if (go.TryGetComponent<HeadUpDisplay>(out var display))
+      {
+        display.Construct(_progress.Progress);
+        display.Init();
+      }
+      return go;
+    }
 
     public GameObject CreateHero()
     {
@@ -121,11 +130,17 @@ namespace Code.Infrastructure.Factory
       if (pool.Count == 0)
         return CreateEnemy(type, at);
 
-      var enemy = pool.Dequeue();
-      enemy.transform.position = at.position;
-      enemy.transform.SetParent(at);
-      enemy.SetActive(true);
-      return enemy;
+      var enemyGo = pool.Dequeue();
+      enemyGo.transform.position = at.position;
+      enemyGo.transform.SetParent(at);
+      var enemy = _staticData.GetEnemy(type);
+      var level = _staticData.GetLevel();
+      RefreshEnemyHealth(enemyGo, enemy, level);
+      if (enemyGo.TryGetComponent<EnemyAttack>(out var attack))
+        attack.Damage = enemy.Damage +
+                        enemy.Damage * level.EnemyBoostFactor * (_progress.Progress.WaveData.CurrentWave - 1);
+      enemyGo.SetActive(true);
+      return enemyGo;
     }
 
     public void PutEnemy(EnemyTypeId type, GameObject enemy)
@@ -142,8 +157,9 @@ namespace Code.Infrastructure.Factory
     private GameObject CreateEnemy(EnemyTypeId type, Transform at)
     {
       var enemy = _staticData.GetEnemy(type);
+      var level = _staticData.GetLevel();
       var go = _assets.Instantiate(enemy.Prefab, at);
-      
+
       if (go.TryGetComponent<EnemyMove>(out var move))
       {
         move.HeroTransform = HeroTransform;
@@ -151,11 +167,7 @@ namespace Code.Infrastructure.Factory
         move.Construct(_async);
         move.Init().Forget();
       }
-      if (go.TryGetComponent<EnemyHealth>(out var health))
-      {
-        health.Max = enemy.Health;
-        health.Current = enemy.Health;
-      }
+      RefreshEnemyHealth(go, enemy, level);
       if (go.TryGetComponent<NavMeshAgent>(out var agent))
       {
         agent.speed = enemy.MoveSpeed;
@@ -168,18 +180,26 @@ namespace Code.Infrastructure.Factory
       {
         attack.Construct(this, _time, HeroTransform);
         attack.Type = enemy.EnemyTypeId;
-        attack.Damage = enemy.Damage;
+        attack.Damage = enemy.Damage +
+                        enemy.Damage * level.EnemyBoostFactor * (_progress.Progress.WaveData.CurrentWave - 1);
         attack.Cleavage = enemy.Cleavage;
         attack.AttackCooldown = enemy.AttackCooldown;
         attack.BulletSpeed = enemy.BulletSpeed;
         attack.ShotDistance = enemy.ShotDistance;
         attack.UpdateSpecificData();
       }
-      if (go.TryGetComponent<EnemyDeath>(out var death))
-      {
-        death.Construct(_progress.Progress);
-      }
+      if (go.TryGetComponent<EnemyDeath>(out var death)) { death.Construct(_progress.Progress); }
       return go;
+    }
+
+    private void RefreshEnemyHealth(GameObject go, EnemyStaticData enemy, LevelStaticData level)
+    {
+      if (go.TryGetComponent<EnemyHealth>(out var health))
+      {
+        health.Max = enemy.Health +
+                     enemy.Health * level.EnemyBoostFactor * (_progress.Progress.WaveData.CurrentWave - 1);
+        health.Current = health.Max;
+      }
     }
 
     private GameObject CreateBullet(Vector3 at)

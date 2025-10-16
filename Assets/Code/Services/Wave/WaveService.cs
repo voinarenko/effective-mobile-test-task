@@ -16,12 +16,12 @@ namespace Code.Services.Wave
 
     public void Init()
     {
-      _progress.Progress.WaveData.EnemyRemoved += CheckEnemies;
+      _progress.Progress.WaveData.EnemyChanged += CheckEnemies;
       SpawnEnemies();
     }
 
     public void Dispose() =>
-      _progress.Progress.WaveData.EnemyRemoved -= CheckEnemies;
+      _progress.Progress.WaveData.EnemyChanged -= CheckEnemies;
 
     private void SpawnEnemies()
     {
@@ -30,9 +30,9 @@ namespace Code.Services.Wave
           point.Spawn();
     }
 
-    private void CheckEnemies()
+    private void CheckEnemies(int count)
     {
-      if (_progress.Progress.WaveData.GetEnemies() > 0) return;
+      if (count > 0) return;
       _progress.Progress.WaveData.NextWave();
       SpawnEnemies();
     }

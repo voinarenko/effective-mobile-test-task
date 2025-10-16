@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Code.StaticData
 {
@@ -8,5 +7,6 @@ namespace Code.StaticData
   {
     public float EnemyBoostFactor = 0.1f;
     public float HeroBoostFactor = 0.2f;
+    public float WavePause = 3f;
   }
 }

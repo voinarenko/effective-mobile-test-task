@@ -10,5 +10,7 @@ namespace Code.Services.StaticData
     EnemyStaticData GetEnemy(EnemyTypeId type);
     HeroStaticData GetHero();
     Dictionary<EnemyTypeId, EnemyStaticData> GetEnemies();
+    void LoadLevel();
+    LevelStaticData GetLevel();
   }
 }

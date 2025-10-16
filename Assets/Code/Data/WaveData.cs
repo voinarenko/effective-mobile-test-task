@@ -6,9 +6,9 @@ namespace Code.Data
   public class WaveData
   {
     public event Action<int> WaveChanged;
-    
+    public event Action<int> EnemyChanged;
+
     public int CurrentWave = 1;
-    public event Action EnemyRemoved;
 
     private int _currentEnemies;
 
@@ -18,13 +18,16 @@ namespace Code.Data
       WaveChanged?.Invoke(CurrentWave);
     }
 
-    public void AddEnemy() =>
+    public void AddEnemy()
+    {
       _currentEnemies++;
+      EnemyChanged?.Invoke(_currentEnemies);
+    }
 
     public void RemoveEnemy()
     {
       _currentEnemies--;
-      EnemyRemoved?.Invoke();
+      EnemyChanged?.Invoke(_currentEnemies);
     }
 
     public int GetEnemies() => _currentEnemies;

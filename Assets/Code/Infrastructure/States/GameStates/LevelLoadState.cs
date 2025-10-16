@@ -61,6 +61,7 @@ namespace Code.Infrastructure.States.GameStates
     private void OnLoaded()
     {
       _gameFactory.CreateHero();
+      _gameFactory.CreateHud();
       _wave.Init();
       _stateMachine.Enter<LevelLoopState>();
     }
