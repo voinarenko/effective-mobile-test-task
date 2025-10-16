@@ -148,7 +148,8 @@ namespace Code.Infrastructure.Factory
       {
         move.HeroTransform = HeroTransform;
         move.HeroDeath = HeroDeath;
-        move.Init();
+        move.Construct(_async);
+        move.Init().Forget();
       }
       if (go.TryGetComponent<EnemyHealth>(out var health))
       {

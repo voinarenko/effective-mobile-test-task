@@ -15,12 +15,13 @@ MonoBehaviour:
   EnemyTypeId: 5
   Health: 30
   Damage: 10
-  BoostFactor: 0.1
   MoveSpeed: 7
   RotateSpeed: 1600
   Acceleration: 15
   StoppingDistance: 2
   Cleavage: 0.625
   AttackCooldown: 1
+  BulletSpeed: 10
+  ShotDistance: 10
   Prefab: {fileID: 7082164974231307710, guid: 8a32c47e449532a4aaeb9f8c934cd6ac, type: 3}
   SpawnWeight: 500

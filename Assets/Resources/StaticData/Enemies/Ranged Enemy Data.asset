@@ -15,7 +15,6 @@ MonoBehaviour:
   EnemyTypeId: 15
   Health: 50
   Damage: 20
-  BoostFactor: 0.1
   MoveSpeed: 5
   RotateSpeed: 1600
   Acceleration: 10

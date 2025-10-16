@@ -1,4 +1,6 @@
 ﻿using Code.Actors.Hero;
+using Code.Services.Async;
+using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,16 +17,27 @@ namespace Code.Actors.Enemies
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private EnemyAttack _attack;
 
+    private bool _isMoving;
+    private IAsyncService _async;
+
+    public void Construct(IAsyncService async) =>
+      _async = async;
+
     private void Update()
     {
+      if (!_isMoving) return;
       if (!HeroTransform) return;
       
       SetDestinationForAgent();
       CheckDistance();
     }
 
-    public void Init() =>
+    public async UniTaskVoid Init()
+    {
       HeroDeath.Happened += HeroKilled;
+      await _async.NextFrame();
+      _isMoving = true;
+    }
 
     private void SetDestinationForAgent()
     {
