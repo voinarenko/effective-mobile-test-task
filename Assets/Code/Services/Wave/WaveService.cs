@@ -16,7 +16,7 @@ namespace Code.Services.Wave
 
     public void Init()
     {
-      _progress.Progress.WaveData.EnemyRemoved -= CheckEnemies;
+      _progress.Progress.WaveData.EnemyRemoved += CheckEnemies;
       SpawnEnemies();
     }
 
