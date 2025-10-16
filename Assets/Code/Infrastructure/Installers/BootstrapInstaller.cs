@@ -11,6 +11,7 @@ using Code.Services.Random;
 using Code.Services.StaticData;
 using Code.Services.Time;
 using Code.Services.Wave;
+using Code.UI.Services.Factory;
 using Zenject;
 
 namespace Code.Infrastructure.Installers
@@ -61,6 +62,7 @@ namespace Code.Infrastructure.Installers
     {
       Container.Bind<IAssets>().To<AssetProvider>().AsSingle();
       Container.Bind<IGameFactory>().To<GameFactory>().AsSingle();
+      Container.Bind<IUiFactory>().To<UiFactory>().AsSingle();
     }
 
     private void BindStateMachine() =>
@@ -74,9 +76,11 @@ namespace Code.Infrastructure.Installers
       Container.BindInterfacesAndSelfTo<BootstrapState>().AsSingle();
       Container.BindInterfacesAndSelfTo<ProgressLoadState>().AsSingle();
       Container.BindInterfacesAndSelfTo<MenuLoadState>().AsSingle();
+      Container.BindInterfacesAndSelfTo<MenuLoopState>().AsSingle();
       Container.BindInterfacesAndSelfTo<LevelLoadState>().AsSingle();
       Container.BindInterfacesAndSelfTo<LevelLoopState>().AsSingle();
-      Container.BindInterfacesAndSelfTo<MenuLoopState>().AsSingle();
+      Container.BindInterfacesAndSelfTo<EndGameLoadState>().AsSingle();
+      Container.BindInterfacesAndSelfTo<EndGameLoopState>().AsSingle();
     }
 
     public void Initialize() =>

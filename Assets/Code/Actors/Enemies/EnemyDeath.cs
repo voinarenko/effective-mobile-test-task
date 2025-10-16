@@ -54,13 +54,12 @@ namespace Code.Actors.Enemies
       _agent.speed = 0;
       _attack.enabled = false;
       _animate.PlayDeath();
+      Happened?.Invoke();
       Destroy(gameObject, TimeToDestroy);
     }
 
-    private void UpdateGlobalData()
-    {
+    private void UpdateGlobalData() =>
       _progress.WaveData.RemoveEnemy();
-    }
 
     private void OnDeath() =>
       _agent.isStopped = true;

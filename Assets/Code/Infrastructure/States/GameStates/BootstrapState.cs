@@ -47,6 +47,7 @@ namespace Code.Infrastructure.States.GameStates
       _staticData.LoadEnemies();
       _staticData.LoadHero();
       _staticData.LoadLevel();
+      _staticData.LoadWindows();
     }
   }
 }

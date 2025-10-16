@@ -10,6 +10,7 @@ using Code.Services.Progress;
 using Code.Services.Random;
 using Code.Services.StaticData;
 using Code.Services.Wave;
+using UnityEngine;
 
 namespace Code.Infrastructure.States.GameStates
 {
@@ -60,6 +61,7 @@ namespace Code.Infrastructure.States.GameStates
 
     private void OnLoaded()
     {
+      Cursor.visible = false;
       _gameFactory.CreateHero();
       _gameFactory.CreateHud();
       _wave.Init();

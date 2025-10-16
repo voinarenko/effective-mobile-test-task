@@ -9,8 +9,6 @@ namespace Code.Actors.Hero
   {
     public event Action Happened;
 
-    private const string DeadTag = "Dead";
-
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private HeroHealth _health;
     [SerializeField] private HeroMove _move;
@@ -44,7 +42,6 @@ namespace Code.Actors.Hero
       _move.enabled = false;
       _look.enabled = false;
       _attack.enabled = false;
-      tag = DeadTag;
       Happened?.Invoke();
     }
 

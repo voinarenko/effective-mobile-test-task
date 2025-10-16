@@ -3,7 +3,6 @@ using Code.Services.Async;
 using Code.Services.Input;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +32,13 @@ namespace Code.Actors.Hero
       _async = async;
       _input = input;
       _gameFactory = gameFactory;
+    }
+
+    private void OnDestroy()
+    {
+      var attack = _input.GetActions().Player.Attack;
+      attack.performed -= OnAttackPressed;
+      attack.canceled -= OnAttackReleased;
     }
 
     public void Init()
@@ -70,8 +76,6 @@ namespace Code.Actors.Hero
 
       if (Physics.Raycast(origin, direction, out var hit, ShotDistance))
       {
-        // var health = hit.collider.GetComponentInParent<IHealth>();
-        // health?.TakeDamage(Damage);
         if (hit.transform.parent.TryGetComponent<IHealth>(out var health))
           health.TakeDamage(Damage);
         target = hit.point;

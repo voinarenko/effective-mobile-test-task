@@ -111,6 +111,7 @@ namespace Code.Infrastructure.Factory
       {
         death.Construct(_progress.Progress);
         HeroDeath = death;
+        _progress.TrackHeroDeath(death);
       }
       if (go.TryGetComponent<HeroShoot>(out var shoot))
       {

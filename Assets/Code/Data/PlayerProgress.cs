@@ -9,7 +9,6 @@ namespace Code.Data
 
     public WaveData WaveData = new();
 
-    public int Level = 1;
     public float MaxHealth;
     public float CurrentHealth
     {
@@ -24,7 +23,6 @@ namespace Code.Data
 
     public void Reset()
     {
-      Level = 1;
     }
   }
 }
