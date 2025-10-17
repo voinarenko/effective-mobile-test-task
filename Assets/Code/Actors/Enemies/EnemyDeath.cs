@@ -53,6 +53,7 @@ namespace Code.Actors.Enemies
 
     private async UniTaskVoid Die()
     {
+      var type = _attack.Type;
       UpdateGlobalData();
       _collider.enabled = false;
       _move.enabled = false;
@@ -63,7 +64,8 @@ namespace Code.Actors.Enemies
       _animate.PlayDeath();
       _audio.Death();
       await _async.WaitForSeconds(TimeToDestroy);
-      _gameFactory.PutEnemy(_attack.Type, gameObject);
+      if (gameObject) 
+        _gameFactory.PutEnemy(type, gameObject);
     }
 
     private void UpdateGlobalData() =>

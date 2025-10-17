@@ -6,6 +6,7 @@ using Code.Services.Input;
 using Code.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,10 +26,12 @@ namespace Code.Actors.Hero
     private IGameFactory _gameFactory;
     private IInputService _input;
     private IAsyncService _async;
+    private IStaticDataService _staticData;
 
+    private bool _isShooting;
     private bool _shootButtonHeld;
     private PlayerProgress _progress;
-    private IStaticDataService _staticData;
+    private CancellationTokenSource _cts;
 
     public void Construct(IGameFactory gameFactory, IInputService input, IAsyncService async,
       IStaticDataService staticData, PlayerProgress progress)
@@ -59,10 +62,10 @@ namespace Code.Actors.Hero
 
     private void OnAttackPressed(InputAction.CallbackContext context)
     {
-      if (_shootButtonHeld) return;
-
       _shootButtonHeld = true;
-      ShootLoopAsync().Forget();
+
+      if (!_isShooting)
+        ShootLoopAsync().Forget();
     }
 
     private void OnAttackReleased(InputAction.CallbackContext context) =>
@@ -70,11 +73,14 @@ namespace Code.Actors.Hero
 
     private async UniTaskVoid ShootLoopAsync()
     {
+      _isShooting = true;
+      
       while (_shootButtonHeld)
       {
         Fire();
         await _async.WaitForSeconds(ShootDelay);
       }
+      _isShooting = false;
     }
 
     private void Fire()
