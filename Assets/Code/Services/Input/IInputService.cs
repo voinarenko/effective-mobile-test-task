@@ -1,7 +1,7 @@
 ﻿namespace Code.Services.Input
 {
-    public interface IInputService : IService
-    {
-        PlayerInputActions GetActions();
-    }
+  public interface IInputService : IService
+  {
+    PlayerInputActions GetActions();
+  }
 }

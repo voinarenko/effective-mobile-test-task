@@ -1,5 +1,6 @@
 ﻿using Code.Actors.Enemies.Interfaces;
 using Code.Actors.Interfaces;
+using Code.Data;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,11 +9,9 @@ namespace Code.Actors.Enemies
 {
   public class EnemyMelee : MonoBehaviour, IMeleeAttack
   {
-    private const string PlayerLayerMask = "Player";
+    private const float AttackTime = 0.1f;
 
     [SerializeField] private List<Transform> _hitPoints;
-    private const string PlayerTag = "Player";
-    private const float AttackTime = 0.1f;
     private int _layerMask;
     private readonly Collider[] _hits = new Collider[1];
 
@@ -27,20 +26,26 @@ namespace Code.Actors.Enemies
     }
 
     private void Start() =>
-      _layerMask = LayerMask.GetMask(PlayerLayerMask);
+      _layerMask = LayerMask.GetMask(Constants.PlayerLayerMask);
 
     public void Perform()
     {
+      var hitSuccess = false;
+
       foreach (var hitPoint in _hitPoints)
       {
         if (!Hit(out var hit, hitPoint)) continue;
-        PhysicsDebug.DrawDebug(hitPoint.position, _cleavage, AttackTime);
-        if (!hit.CompareTag(PlayerTag)) return;
-        if (hit.transform.parent.TryGetComponent<IHealth>(out var health)) 
-          health.TakeDamage(_damage);
+        if (!hit.CompareTag(Constants.PlayerTag)) continue;
 
-        _audio.Melee();
+        if (hit.transform.parent.TryGetComponent<IHealth>(out var health))
+        {
+          health.TakeDamage(_damage);
+          hitSuccess = true;
+        }
       }
+
+      if (hitSuccess)
+        _audio.Melee();
     }
 
     private bool Hit(out Collider hit, Transform point)

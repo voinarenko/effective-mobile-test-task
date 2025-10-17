@@ -1,4 +1,5 @@
-﻿using Code.Infrastructure.Loading;
+﻿using Code.Data;
+using Code.Infrastructure.Loading;
 using Code.Infrastructure.States.StateMachine;
 using Code.Infrastructure.States.StatesInfrastructure;
 using Code.Services.Random;
@@ -8,7 +9,6 @@ namespace Code.Infrastructure.States.GameStates
 {
   public class BootstrapState : IState
   {
-    private const string BootSceneName = "Boot";
     private readonly IGameStateMachine _stateMachine;
     private readonly ISceneLoader _sceneLoader;
     private readonly IStaticDataService _staticData;
@@ -28,7 +28,7 @@ namespace Code.Infrastructure.States.GameStates
     public void Enter()
     {
       _curtain.Show();
-      _sceneLoader.Load(BootSceneName, OnLoad).Forget();
+      _sceneLoader.Load(Constants.BootSceneName, OnLoad).Forget();
     }
 
     public void Exit()

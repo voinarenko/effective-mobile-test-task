@@ -1,4 +1,5 @@
-﻿using Code.StaticData;
+﻿using Code.Data;
+using Code.StaticData;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,22 +8,18 @@ namespace Code.Services.StaticData
 {
   public class StaticDataService : IStaticDataService
   {
-    private const string StaticDataHeroPath = "StaticData/HeroData";
-    private const string StaticDataLevelPath = "StaticData/LevelData";
-    private const string StaticDataEnemiesPath = "StaticData/Enemies";
-    private const string StaticDataWindowsPath = "StaticData/WindowStaticData";
     private Dictionary<EnemyTypeId, EnemyStaticData> _enemies;
     private HeroStaticData _hero;
     private LevelStaticData _level;
 
     public void LoadHero() =>
-      _hero = Resources.Load<HeroStaticData>(StaticDataHeroPath);
+      _hero = Resources.Load<HeroStaticData>(Constants.StaticDataHeroPath);
 
-    public void LoadLevel() => _level = Resources.Load<LevelStaticData>(StaticDataLevelPath);
+    public void LoadLevel() => _level = Resources.Load<LevelStaticData>(Constants.StaticDataLevelPath);
 
     public void LoadEnemies() =>
       _enemies = Resources
-        .LoadAll<EnemyStaticData>(StaticDataEnemiesPath)
+        .LoadAll<EnemyStaticData>(Constants.StaticDataEnemiesPath)
         .ToDictionary(x => x.EnemyTypeId, x => x);
 
     public Dictionary<EnemyTypeId, EnemyStaticData> GetEnemies() => _enemies;

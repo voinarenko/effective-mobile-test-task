@@ -4,14 +4,12 @@ using Code.Services.Time;
 using Code.StaticData;
 using UnityEngine;
 using UnityEngine.AI;
-using Action = System.Action;
 
 namespace Code.Actors.Enemies
 {
   [RequireComponent(typeof(EnemyAnimate))]
   public class EnemyAttack : MonoBehaviour
   {
-    public event Action Completed;
     public EnemyTypeId Type { get; set; }
     public float AttackCooldown { get; set; }
     public float Cleavage { get; set; }
@@ -84,17 +82,13 @@ namespace Code.Actors.Enemies
       _attackCooldown = AttackCooldown;
       _isAttacking = false;
       if (_specificAttack is IShootAttack) _audio.Reload();
-      Completed?.Invoke();
     }
 
     private void OnHit() =>
       _agent.speed = 0;
 
-    private void OnHitEnded()
-    {
+    private void OnHitEnded() =>
       _agent.speed = _savedSpeed;
-      Completed?.Invoke();
-    }
 
     public void EnableAttack() =>
       _attackIsActive = true;

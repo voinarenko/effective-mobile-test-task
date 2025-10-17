@@ -10,14 +10,14 @@ namespace Code.Actors.Enemies
     private const float MinimalVelocity = 0.1f;
 
     [SerializeField] private NavMeshAgent _agent;
-    [SerializeField] private EnemyAnimate animate;
+    [SerializeField] private EnemyAnimate _animate;
 
     private void Update()
     {
       if (ShouldMove())
-        animate.Move();
+        _animate.Move();
       else
-        animate.StopMoving();
+        _animate.StopMoving();
     }
 
     private bool ShouldMove() =>

@@ -4,7 +4,6 @@ using Code.Infrastructure.Loading;
 using Code.Infrastructure.States.StateMachine;
 using Code.Infrastructure.States.StatesInfrastructure;
 using Code.UI.Services.Factory;
-using Code.UI.Windows;
 using UnityEngine;
 
 namespace Code.Infrastructure.States.GameStates
@@ -41,7 +40,6 @@ namespace Code.Infrastructure.States.GameStates
 
     private void OnLoaded()
     {
-      Cursor.visible = true;
       _uiFactory.EndGameWindow.UpdateData();
       _stateMachine.Enter<EndGameLoopState>();
     }

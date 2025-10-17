@@ -12,7 +12,7 @@ namespace Code.Actors.Enemies
   {
     private const float TimeToDestroy = 3;
 
-    [SerializeField] private EnemyMove _mover;
+    [SerializeField] private EnemyMove _move;
     [SerializeField] private EnemyHealth _health;
     [SerializeField] private EnemyAnimate _animate;
     [SerializeField] private NavMeshAgent _agent;
@@ -39,23 +39,23 @@ namespace Code.Actors.Enemies
     public void Reactivate()
     {
       _collider.enabled = true;
-      _mover.enabled = true;
+      _move.enabled = true;
       _agent.updatePosition = true;
       _agent.updateRotation = true;
       _attack.enabled = true;
     }
-    
+
     private void OnHealthChanged()
     {
       if (_health.Current <= 0)
-        Die();
+        Die().Forget();
     }
 
     private async UniTaskVoid Die()
     {
       UpdateGlobalData();
       _collider.enabled = false;
-      _mover.enabled = false;
+      _move.enabled = false;
       _agent.updatePosition = false;
       _agent.updateRotation = false;
       _agent.speed = 0;

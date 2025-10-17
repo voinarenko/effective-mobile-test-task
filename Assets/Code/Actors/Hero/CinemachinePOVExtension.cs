@@ -9,10 +9,10 @@ namespace Code.Actors.Hero
 {
   public class CinemachinePovExtension : CinemachineExtension
   {
-    public float Speed { get; set; }
     public event Action LookChanged;
+    public float Speed { get; set; }
 
-    [SerializeField] private float _clampAngle = 80f;
+    private const float ClampAngle = 80f;
 
     private IInputService _input;
     private ITimeService _time;
@@ -39,7 +39,7 @@ namespace Code.Actors.Hero
           var deltaInput = _input.GetActions().Player.Look.ReadValue<Vector2>();
           _startRotation.x += deltaInput.x * Speed * _time.DeltaTime();
           _startRotation.y += deltaInput.y * Speed * _time.DeltaTime();
-          _startRotation.y = Mathf.Clamp(_startRotation.y, -_clampAngle, _clampAngle);
+          _startRotation.y = Mathf.Clamp(_startRotation.y, -ClampAngle, ClampAngle);
           state.RawOrientation = Quaternion.Euler(-_startRotation.y, _startRotation.x, 0f);
           LookChanged?.Invoke();
         }

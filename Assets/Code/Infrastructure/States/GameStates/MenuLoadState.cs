@@ -38,10 +38,7 @@ namespace Code.Infrastructure.States.GameStates
       _curtain.Hide();
     }
 
-    private void OnLoaded()
-    {
-      Cursor.visible = true;
+    private void OnLoaded() =>
       _stateMachine.Enter<MenuLoopState>();
-    }
   }
 }

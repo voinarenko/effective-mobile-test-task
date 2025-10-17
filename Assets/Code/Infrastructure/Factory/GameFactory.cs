@@ -5,7 +5,6 @@ using Code.Infrastructure.AssetManagement;
 using Code.Services.Async;
 using Code.Services.Input;
 using Code.Services.Progress;
-using Code.Services.Random;
 using Code.Services.StaticData;
 using Code.Services.Time;
 using Code.StaticData;
@@ -18,17 +17,16 @@ namespace Code.Infrastructure.Factory
 {
   public class GameFactory : IGameFactory
   {
-    public Transform HeroTransform { get; set; }
     public RectTransform UIRoot { get; set; }
     public Transform StartPoint { get; set; }
     public Transform ProjectilesPool { get; set; }
     public Camera MainCamera { get; set; }
     public CinemachineVirtualCamera VirtualCamera { get; set; }
 
+    private Transform _heroTransform;
     private HeroDeath _heroDeath;
 
     private readonly IAssets _assets;
-    private readonly IRandomService _random;
     private readonly IProgressService _progress;
     private readonly IStaticDataService _staticData;
     private readonly IInputService _input;
@@ -41,11 +39,10 @@ namespace Code.Infrastructure.Factory
     private readonly Queue<GameObject> _enemyRangedPool = new();
 
 
-    public GameFactory(IAssets assets, IRandomService random, IProgressService progress, IStaticDataService staticData,
-      IInputService input, ITimeService time, IAsyncService async)
+    public GameFactory(IAssets assets, IProgressService progress, IStaticDataService staticData, IInputService input,
+      ITimeService time, IAsyncService async)
     {
       _assets = assets;
-      _random = random;
       _progress = progress;
       _staticData = staticData;
       _input = input;
@@ -84,7 +81,7 @@ namespace Code.Infrastructure.Factory
     public GameObject CreateHero()
     {
       var go = _assets.Instantiate(AssetPath.HeroPath, StartPoint);
-      HeroTransform = go.transform;
+      _heroTransform = go.transform;
       var data = _staticData.GetHero();
       if (go.TryGetComponent<HeroMove>(out var move))
       {
@@ -98,7 +95,7 @@ namespace Code.Infrastructure.Factory
         if (VirtualCamera.TryGetComponent(out CinemachinePovExtension pov))
         {
           pov.Speed = data.LookSpeed;
-          pov.ResetDirection(HeroTransform.forward);
+          pov.ResetDirection(_heroTransform.forward);
           look.Init(MainCamera, pov);
         }
       }
@@ -170,7 +167,7 @@ namespace Code.Infrastructure.Factory
 
       if (go.TryGetComponent<EnemyMove>(out var move))
       {
-        move.HeroTransform = HeroTransform;
+        move.HeroTransform = _heroTransform;
         move.HeroDeath = _heroDeath;
         move.Construct(_async);
         move.Init().Forget();
@@ -182,11 +179,11 @@ namespace Code.Infrastructure.Factory
         agent.stoppingDistance = enemy.StoppingDistance;
         agent.angularSpeed = enemy.RotateSpeed;
         agent.acceleration = enemy.Acceleration;
-        agent.destination = HeroTransform.position;
+        agent.destination = _heroTransform.position;
       }
       if (go.TryGetComponent<EnemyAttack>(out var attack))
       {
-        attack.Construct(this, _time, HeroTransform);
+        attack.Construct(this, _time, _heroTransform);
         attack.Type = enemy.EnemyTypeId;
         attack.Damage = enemy.Damage +
                         enemy.Damage * level.EnemyBoostFactor * (_progress.Progress.WaveData.CurrentWave - 1);

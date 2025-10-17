@@ -9,7 +9,6 @@ namespace Code.Infrastructure.Factory
   {
     GameObject GetEnemy(EnemyTypeId type, Transform at);
     void PutEnemy(EnemyTypeId type, GameObject enemy);
-    Transform HeroTransform { get; set; }
     RectTransform UIRoot { get; set; }
     Transform StartPoint { get; set; }
     Camera MainCamera { get; set; }
