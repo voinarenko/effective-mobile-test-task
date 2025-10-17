@@ -10,32 +10,28 @@ namespace Code.UI.Windows
   public class EndGameWindow : BaseWindow
   {
     [SerializeField] private TextMeshProUGUI _score;
-    [SerializeField] private MenuReturnButton _returnButton;
+    [SerializeField] private RestartButton _restartButton;
     private IProgressService _progress;
-    private IUiFactory _uiFactory;
 
     [Inject]
-    public void Construct(IProgressService progress, IUiFactory uiFactory)
-    {
-      _uiFactory = uiFactory;
+    public void Construct(IProgressService progress) =>
       _progress = progress;
-    }
 
     public void UpdateData() =>
       _score.text = $"{_progress.Progress.WaveData.CurrentWave - 1}";
 
     protected override void Initialize() =>
-      _returnButton.Clicked += ProcessClick;
+      _restartButton.Clicked += ProcessClick;
 
     protected override void Cleanup()
     {
       base.Cleanup();
-      _returnButton.Clicked -= ProcessClick;
+      _restartButton.Clicked -= ProcessClick;
     }
 
     private void ProcessClick()
     {
-      _returnButton.Clicked -= ProcessClick;
+      _restartButton.Clicked -= ProcessClick;
       // StateMachine.Enter<BootstrapState>();
     }
   }

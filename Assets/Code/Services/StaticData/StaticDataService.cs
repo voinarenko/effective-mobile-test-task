@@ -1,6 +1,4 @@
 ﻿using Code.StaticData;
-using Code.StaticData.Windows;
-using Code.UI.Services.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,7 +12,6 @@ namespace Code.Services.StaticData
     private const string StaticDataEnemiesPath = "StaticData/Enemies";
     private const string StaticDataWindowsPath = "StaticData/WindowStaticData";
     private Dictionary<EnemyTypeId, EnemyStaticData> _enemies;
-    private Dictionary<WindowId, WindowConfig> _windows;
     private HeroStaticData _hero;
     private LevelStaticData _level;
 
@@ -27,11 +24,6 @@ namespace Code.Services.StaticData
       _enemies = Resources
         .LoadAll<EnemyStaticData>(StaticDataEnemiesPath)
         .ToDictionary(x => x.EnemyTypeId, x => x);
-    public void LoadWindows() =>
-      _windows = Resources
-        .Load<WindowStaticData>(StaticDataWindowsPath)
-        .Configs
-        .ToDictionary(x => x.WindowId, x => x);
 
     public Dictionary<EnemyTypeId, EnemyStaticData> GetEnemies() => _enemies;
     
@@ -40,7 +32,5 @@ namespace Code.Services.StaticData
     public HeroStaticData GetHero() => _hero;
     
     public LevelStaticData GetLevel() => _level;
-    
-    public WindowConfig GetWindow(WindowId windowId) => _windows[windowId];
   }
 }

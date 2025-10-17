@@ -1,6 +1,4 @@
 ﻿using Code.StaticData;
-using Code.StaticData.Windows;
-using Code.UI.Services.Windows;
 using System.Collections.Generic;
 
 namespace Code.Services.StaticData
@@ -14,7 +12,5 @@ namespace Code.Services.StaticData
     Dictionary<EnemyTypeId, EnemyStaticData> GetEnemies();
     void LoadLevel();
     LevelStaticData GetLevel();
-    void LoadWindows();
-    WindowConfig GetWindow(WindowId windowId);
   }
 }

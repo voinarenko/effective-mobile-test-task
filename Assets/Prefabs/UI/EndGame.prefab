@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _score: {fileID: 6021299411322706431}
-  _returnButton: {fileID: 0}
+  _restartButton: {fileID: 4880488550025781173}
 --- !u!1 &6751882186184852795
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,7 +781,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8598524329714544928, guid: 19e749df2d4feec409220658a908f4cf, type: 3}
       propertyPath: m_Name
-      value: ConfirmButton
+      value: RestartButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
