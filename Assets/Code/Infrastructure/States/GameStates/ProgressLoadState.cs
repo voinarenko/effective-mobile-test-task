@@ -19,7 +19,7 @@ namespace Code.Infrastructure.States.GameStates
     public void Enter()
     {
       InitProgress();
-      _stateMachine.Enter<LevelLoadState, string>(Constants.LevelSceneName);
+      _stateMachine.Enter<MenuLoadState>();
     }
 
     public void Exit()

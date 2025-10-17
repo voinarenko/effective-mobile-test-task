@@ -12,7 +12,7 @@ namespace Code.UI.Windows
   public class EndGameWindow : BaseWindow
   {
     [SerializeField] private TextMeshProUGUI _score;
-    [SerializeField] private RestartButton _restartButton;
+    [SerializeField] private Button _restartButton;
     private IProgressService _progress;
     private IGameStateMachine _stateMachine;
 

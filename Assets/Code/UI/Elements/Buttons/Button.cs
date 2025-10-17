@@ -1,25 +1,26 @@
-﻿using Code.Infrastructure.States.StateMachine;
+﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Code.UI.Elements.Buttons
 {
-  public abstract class Button : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler,
+  public class Button : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler,
     IPointerEnterHandler, IPointerExitHandler
   {
-    protected IGameStateMachine StateMachine;
+    public event Action Clicked;
+    
     private Image _image;
 
     [SerializeField] private Sprite _normal;
     [SerializeField] private Sprite _pressed;
     [SerializeField] private Sprite _hover;
 
-    public void Construct(IGameStateMachine stateMachine) =>
-      StateMachine = stateMachine;
-
-    protected virtual void Awake() =>
+    protected void Awake() =>
       TryGetComponent(out _image);
+
+    public void OnPointerClick(PointerEventData eventData) =>
+      Clicked?.Invoke();
 
     public void OnPointerDown(PointerEventData eventData) =>
       _image.sprite = _pressed;
@@ -32,10 +33,5 @@ namespace Code.UI.Elements.Buttons
 
     public void OnPointerExit(PointerEventData eventData) =>
       _image.sprite = _normal;
-
-    public virtual void OnPointerClick(PointerEventData eventData)
-    {
-
-    }
   }
 }
