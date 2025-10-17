@@ -16,7 +16,6 @@ namespace Code.UI.Windows
 
     public virtual void Init()
     {
-      Debug.Log("Base window init");
     }
 
     protected virtual void Initialize()

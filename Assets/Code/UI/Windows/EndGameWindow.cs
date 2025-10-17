@@ -26,8 +26,11 @@ namespace Code.UI.Windows
     public void UpdateData() =>
       _score.text = $"{_progress.Progress.WaveData.CurrentWave - 1}";
 
-    protected override void Initialize() =>
+    protected override void SubscribeUpdates()
+    {
+      base.SubscribeUpdates();
       _restartButton.Clicked += ProcessClick;
+    }
 
     protected override void Cleanup()
     {
@@ -37,7 +40,6 @@ namespace Code.UI.Windows
 
     private void ProcessClick()
     {
-      _restartButton.Clicked -= ProcessClick;
       _progress.Progress.Reset();
       _stateMachine.Enter<LevelLoadState, string>(Constants.LevelSceneName);
     }

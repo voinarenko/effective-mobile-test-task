@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Code.UI.Windows
 {
-  public class MenuWindow : MonoBehaviour
+  public class MenuWindow : BaseWindow
   {
     [SerializeField] private Button _playButton;
     [SerializeField] private Button _quitButton;
@@ -17,18 +17,19 @@ namespace Code.UI.Windows
     public void Construct(IGameStateMachine stateMachine) =>
       _stateMachine = stateMachine;
 
-    private void Start()
+    protected override void SubscribeUpdates()
     {
+      base.SubscribeUpdates();
       _playButton.Clicked += Play;
       _quitButton.Clicked += Utils.Quit;
-      Cursor.visible = true;
     }
 
-    private void OnDestroy()
+    protected override void Cleanup()
     {
-      _playButton.Clicked -= Play;
-      _quitButton.Clicked -= Utils.Quit;
-    }
+      base.Cleanup();
+       _playButton.Clicked -= Play;
+       _quitButton.Clicked -= Utils.Quit;
+   }
 
     private void Play() =>
       _stateMachine.Enter<LevelLoadState, string>(Constants.LevelSceneName);
