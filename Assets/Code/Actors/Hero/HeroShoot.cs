@@ -31,7 +31,6 @@ namespace Code.Actors.Hero
     private bool _isShooting;
     private bool _shootButtonHeld;
     private PlayerProgress _progress;
-    private CancellationTokenSource _cts;
 
     public void Construct(IGameFactory gameFactory, IInputService input, IAsyncService async,
       IStaticDataService staticData, PlayerProgress progress)
