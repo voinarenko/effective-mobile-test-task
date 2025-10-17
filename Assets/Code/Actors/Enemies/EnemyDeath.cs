@@ -64,7 +64,7 @@ namespace Code.Actors.Enemies
       _animate.PlayDeath();
       _audio.Death();
       await _async.WaitForSeconds(TimeToDestroy);
-      if (gameObject) 
+      if (_move.HeroTransform) 
         _gameFactory.PutEnemy(type, gameObject);
     }
 
