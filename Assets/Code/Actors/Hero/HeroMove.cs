@@ -11,7 +11,6 @@ namespace Code.Actors.Hero
     public Camera MainCamera { get; set; }
 
     [SerializeField] private NavMeshAgent _agent;
-    [SerializeField] private HeroAnimate _animator;
 
     private PlayerInputActions _controls;
     private bool _isMoving;

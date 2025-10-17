@@ -5,5 +5,7 @@
     public const string LevelSceneName = "Level";
     public const string MenuSceneName = "Menu";
     public const string EndGameSceneName = "EndGame";
+    
+    public const float DeathDuration = 1;
   }
 }

@@ -39,7 +39,7 @@ namespace Code.Actors.Enemies
         if (hit.transform.parent.TryGetComponent<IHealth>(out var health)) 
           health.TakeDamage(_damage);
 
-        _audio.Attack();
+        _audio.Melee();
       }
     }
 

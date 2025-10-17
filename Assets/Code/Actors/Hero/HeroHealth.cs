@@ -20,6 +20,7 @@ namespace Code.Actors.Hero
       set => _progress.CurrentHealth = value;
     }
 
+    [SerializeField] private HeroAudio _audio;
     private PlayerProgress _progress;
     private IStaticDataService _staticData;
 
@@ -37,6 +38,7 @@ namespace Code.Actors.Hero
     {
       if (Current <= 0) return;
       Current -= damage;
+      _audio.Hit();
     }
 
     private void Heal(int currentWave) =>

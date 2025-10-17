@@ -110,7 +110,7 @@ namespace Code.Infrastructure.Factory
       }
       if (go.TryGetComponent<HeroDeath>(out var death))
       {
-        death.Construct(_progress.Progress);
+        death.Construct(_progress.Progress, _async);
         _heroDeath = death;
         _progress.TrackHeroDeath(death);
       }
@@ -141,6 +141,8 @@ namespace Code.Infrastructure.Factory
       if (enemyGo.TryGetComponent<EnemyAttack>(out var attack))
         attack.Damage = enemy.Damage +
                         enemy.Damage * level.EnemyBoostFactor * (_progress.Progress.WaveData.CurrentWave - 1);
+      if (enemyGo.TryGetComponent<EnemyDeath>(out var death))
+        death.Reactivate();
       enemyGo.SetActive(true);
       return enemyGo;
     }
@@ -194,7 +196,8 @@ namespace Code.Infrastructure.Factory
         attack.ShotDistance = enemy.ShotDistance;
         attack.UpdateSpecificData();
       }
-      if (go.TryGetComponent<EnemyDeath>(out var death)) { death.Construct(_progress.Progress); }
+      if (go.TryGetComponent<EnemyDeath>(out var death))
+        death.Construct(this, _progress.Progress, _async);
       return go;
     }
 

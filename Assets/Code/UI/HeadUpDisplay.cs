@@ -9,6 +9,7 @@ namespace Code.UI
 {
   public class HeadUpDisplay : MonoBehaviour
   {
+    [SerializeField] private HUDAudio _audio;
     [SerializeField] private HealthBar _healthBar;
     [SerializeField] private Counter _wavesCounter;
     [SerializeField] private Counter _enemiesCounter;
@@ -57,6 +58,10 @@ namespace Code.UI
       _waveTimer
         .DOFillAmount(1, _staticData.GetLevel().WavePause)
         .SetEase(Ease.Linear)
-        .OnComplete(() => _waveTimer.fillAmount = 0);
+        .OnComplete(() =>
+        {
+          _waveTimer.fillAmount = 0;
+          _audio.PlayNewWaveSound();
+        });
   }
 }

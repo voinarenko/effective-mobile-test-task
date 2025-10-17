@@ -1,61 +1,69 @@
 ﻿using Code.Data;
-using TMPro;
+using Code.Infrastructure.Factory;
+using Code.Services.Async;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using Action = System.Action;
 
 namespace Code.Actors.Enemies
 {
   [RequireComponent(typeof(EnemyHealth), typeof(EnemyAnimate), typeof(NavMeshAgent))]
   public class EnemyDeath : MonoBehaviour
   {
-    public event Action Happened;
     private const float TimeToDestroy = 3;
 
+    [SerializeField] private EnemyMove _mover;
+    [SerializeField] private EnemyHealth _health;
+    [SerializeField] private EnemyAnimate _animate;
+    [SerializeField] private NavMeshAgent _agent;
+    [SerializeField] private EnemyAttack _attack;
+    [SerializeField] private BoxCollider _collider;
+    [SerializeField] private EnemyAudio _audio;
+    private IAsyncService _async;
+    private IGameFactory _gameFactory;
     private PlayerProgress _progress;
-    private EnemyMove _mover;
-    private EnemyHealth _health;
-    private EnemyAnimate _animate;
-    private NavMeshAgent _agent;
-    private EnemyAttack _attack;
-    private BoxCollider _collider;
 
-    public void Construct(PlayerProgress progress)
+    public void Construct(IGameFactory gameFactory, PlayerProgress progress, IAsyncService async)
     {
+      _gameFactory = gameFactory;
       _progress = progress;
+      _async = async;
     }
 
-    private void Start()
+    private void Start() =>
+      _health.HealthChanged += OnHealthChanged;
+
+    private void OnDestroy() =>
+      _health.HealthChanged -= OnHealthChanged;
+
+    public void Reactivate()
     {
-      _mover = GetComponent<EnemyMove>();
-      _health = GetComponent<EnemyHealth>();
-      _animate = GetComponent<EnemyAnimate>();
-      _agent = GetComponent<NavMeshAgent>();
-      _attack = GetComponent<EnemyAttack>();
-      _collider = GetComponentInChildren<BoxCollider>();
-
-      _health.HealthChanged += HealthChanged;
+      _collider.enabled = true;
+      _mover.enabled = true;
+      _agent.updatePosition = true;
+      _agent.updateRotation = true;
+      _attack.enabled = true;
     }
-
-    private void HealthChanged()
+    
+    private void OnHealthChanged()
     {
       if (_health.Current <= 0)
         Die();
     }
 
-    private void Die()
+    private async UniTaskVoid Die()
     {
       UpdateGlobalData();
       _collider.enabled = false;
-      _health.HealthChanged -= HealthChanged;
       _mover.enabled = false;
       _agent.updatePosition = false;
       _agent.updateRotation = false;
       _agent.speed = 0;
       _attack.enabled = false;
       _animate.PlayDeath();
-      Happened?.Invoke();
-      Destroy(gameObject, TimeToDestroy);
+      _audio.Death();
+      await _async.WaitForSeconds(TimeToDestroy);
+      _gameFactory.PutEnemy(_attack.Type, gameObject);
     }
 
     private void UpdateGlobalData() =>

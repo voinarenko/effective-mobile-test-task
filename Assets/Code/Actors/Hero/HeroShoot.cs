@@ -11,7 +11,6 @@ using UnityEngine.InputSystem;
 
 namespace Code.Actors.Hero
 {
-  [RequireComponent(typeof(HeroAnimate))]
   public class HeroShoot : MonoBehaviour
   {
     public float Damage { get; set; }
@@ -20,7 +19,6 @@ namespace Code.Actors.Hero
 
     public float ShotDistance { get; set; }
 
-    [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private HeroAudio _heroAudio;
 

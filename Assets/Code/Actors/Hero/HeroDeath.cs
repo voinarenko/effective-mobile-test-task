@@ -1,5 +1,8 @@
 ﻿using Code.Data;
+using Code.Services.Async;
+using Cysharp.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,14 +17,16 @@ namespace Code.Actors.Hero
     [SerializeField] private HeroMove _move;
     [SerializeField] private HeroLook _look;
     [SerializeField] private HeroShoot _attack;
-    [SerializeField] private HeroAnimate _animator;
+    [SerializeField] private HeroAudio _audio;
 
     private bool _isDead;
     private PlayerProgress _progress;
+    private IAsyncService _async;
 
-    public void Construct(PlayerProgress progress)
+    public void Construct(PlayerProgress progress, IAsyncService async)
     {
       _progress = progress;
+      _async = async;
     }
     
     private void Start() =>
@@ -33,15 +38,17 @@ namespace Code.Actors.Hero
     private void OnHealthChanged()
     {
       if (!_isDead && _health.Current <= 0) 
-        Die();
+        Die().Forget();
     }
 
-    private void Die()
+    private async UniTaskVoid Die()
     {
       _isDead = true;
       _move.enabled = false;
       _look.enabled = false;
       _attack.enabled = false;
+      _audio.Dead();
+      await _async.WaitForSeconds(Constants.DeathDuration);
       Happened?.Invoke();
     }
 

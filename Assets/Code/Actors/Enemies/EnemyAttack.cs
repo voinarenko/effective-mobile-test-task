@@ -83,7 +83,7 @@ namespace Code.Actors.Enemies
       _agent.speed = _savedSpeed;
       _attackCooldown = AttackCooldown;
       _isAttacking = false;
-      if (_specificAttack is IShootAttack) _audio.PlayReload();
+      if (_specificAttack is IShootAttack) _audio.Reload();
       Completed?.Invoke();
     }
 
