@@ -104,7 +104,7 @@ namespace Code.Infrastructure.Factory
       }
       if (go.TryGetComponent<HeroHealth>(out var health))
       {
-        health.Construct(_progress.Progress);
+        health.Construct(_progress.Progress, _staticData);
         health.Current = data.Health;
         health.Max = data.Health;
       }
@@ -116,7 +116,7 @@ namespace Code.Infrastructure.Factory
       }
       if (go.TryGetComponent<HeroShoot>(out var shoot))
       {
-        shoot.Construct(this, _input, _async);
+        shoot.Construct(this, _input, _async, _staticData, _progress.Progress);
         shoot.Damage = data.Damage;
         shoot.ShootDelay = data.AttackCooldown;
         shoot.BulletSpeed = data.ProjectileSpeed;

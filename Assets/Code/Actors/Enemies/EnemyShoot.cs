@@ -45,6 +45,7 @@ namespace Code.Actors.Enemies
       bullet.transform
         .DOMove(target, _bulletSpeed)
         .SetSpeedBased()
+        .SetEase(Ease.Linear)
         .OnComplete(() => _gameFactory.PutBullet(bullet));
 
       _audio.Shoot();

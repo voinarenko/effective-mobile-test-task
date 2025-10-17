@@ -1,7 +1,9 @@
 ﻿using Code.Actors.Interfaces;
+using Code.Data;
 using Code.Infrastructure.Factory;
 using Code.Services.Async;
 using Code.Services.Input;
+using Code.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -27,12 +29,18 @@ namespace Code.Actors.Hero
     private IAsyncService _async;
 
     private bool _shootButtonHeld;
+    private PlayerProgress _progress;
+    private IStaticDataService _staticData;
 
-    public void Construct(IGameFactory gameFactory, IInputService input, IAsyncService async)
+    public void Construct(IGameFactory gameFactory, IInputService input, IAsyncService async,
+      IStaticDataService staticData, PlayerProgress progress)
     {
+      _progress = progress;
+      _staticData = staticData;
       _async = async;
       _input = input;
       _gameFactory = gameFactory;
+      _progress.WaveData.WaveChanged += IncreaseDamage;
     }
 
     private void OnDestroy()
@@ -40,6 +48,7 @@ namespace Code.Actors.Hero
       var attack = _input.GetActions().Player.Attack;
       attack.performed -= OnAttackPressed;
       attack.canceled -= OnAttackReleased;
+      _progress.WaveData.WaveChanged -= IncreaseDamage;
       DOTween.KillAll();
     }
 
@@ -73,7 +82,7 @@ namespace Code.Actors.Hero
     private void Fire()
     {
       if (!_shootPoint) return;
-      
+
       var origin = _shootPoint.position;
       var direction = _shootPoint.forward;
       Vector3 target;
@@ -91,12 +100,18 @@ namespace Code.Actors.Hero
       bullet.transform
         .DOMove(target, BulletSpeed)
         .SetSpeedBased()
+        .SetEase(Ease.Linear)
         .OnComplete(() => _gameFactory.PutBullet(bullet));
 
-      OnFire();
+      _heroAudio.Shoot();
     }
 
-    private void OnFire() =>
-      _heroAudio.Shoot();
+    private void IncreaseDamage(int currentWave)
+    {
+      var heroData = _staticData.GetHero();
+      var levelData = _staticData.GetLevel();
+      Damage = heroData.Damage + heroData.Damage * levelData.HeroBoostFactor * (_progress.WaveData.CurrentWave - 1);
+      BulletSpeed = heroData.ProjectileSpeed * (1 - levelData.HeroBoostFactor);
+    }
   }
 }
