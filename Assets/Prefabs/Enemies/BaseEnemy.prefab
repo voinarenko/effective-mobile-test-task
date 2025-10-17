@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 8649501591300120365}
-  animate: {fileID: 9193984182133261566}
+  _animate: {fileID: 9193984182133261566}
 --- !u!114 &1740678622543289402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb5dde5498f94cd29772ff4bb330245f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mover: {fileID: 753518817303938587}
+  _move: {fileID: 753518817303938587}
   _health: {fileID: 3284828866856555970}
   _animate: {fileID: 9193984182133261566}
   _agent: {fileID: 8649501591300120365}
