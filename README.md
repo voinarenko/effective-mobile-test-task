@@ -1,6 +1,7 @@
 # Тестовое задание №2 для Effective Mobile
 ### Билд: [ссылка](https://drive.google.com/file/d/1DxxeH1crkTEZYYZd59KWfMf77Dt_z7BY/view?usp=sharing)
-##
+### Проект: [ссылка](https://drive.google.com/file/d/1vWEClWYahaZ7nTT__TDcYnMag5YtXIvp/view?usp=sharing)
+### Общее время выполнения: 27 ч
 ## Управление:
 
 &emsp;***W, A, S, D / Стрелки управления курсором*** — перемещение героя
