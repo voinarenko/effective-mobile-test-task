@@ -27,7 +27,7 @@ namespace Code.UI
     {
       UpdateHealth();
       _wavesCounter.UpdateCounter(_progress.WaveData.CurrentWave);
-      _enemiesCounter.UpdateCounter(_progress.WaveData.GetEnemies());
+      _enemiesCounter.UpdateCounter(_progress.WaveData.CurrentEnemies);
       _progress.HealthChanged += UpdateHealth;
       _progress.WaveData.WaveChanged += UpdateWavesCounter;
       _progress.WaveData.EnemyChanged += UpdateEnemiesCounter;

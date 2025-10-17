@@ -23,6 +23,8 @@ namespace Code.Data
 
     public void Reset()
     {
+      WaveData.CurrentWave = 1;
+      WaveData.CurrentEnemies = 0;
     }
   }
 }

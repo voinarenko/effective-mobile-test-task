@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Code.Data
 {
@@ -8,9 +9,8 @@ namespace Code.Data
     public event Action<int> WaveChanged;
     public event Action<int> EnemyChanged;
 
-    public int CurrentWave = 1;
-
-    private int _currentEnemies;
+    public int CurrentWave { get; set; } = 1;
+    public int CurrentEnemies { get; set; }
 
     public void NextWave()
     {
@@ -20,16 +20,14 @@ namespace Code.Data
 
     public void AddEnemy()
     {
-      _currentEnemies++;
-      EnemyChanged?.Invoke(_currentEnemies);
+      CurrentEnemies++;
+      EnemyChanged?.Invoke(CurrentEnemies);
     }
 
     public void RemoveEnemy()
     {
-      _currentEnemies--;
-      EnemyChanged?.Invoke(_currentEnemies);
+      CurrentEnemies--;
+      EnemyChanged?.Invoke(CurrentEnemies);
     }
-
-    public int GetEnemies() => _currentEnemies;
   }
 }

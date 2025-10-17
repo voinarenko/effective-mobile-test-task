@@ -1,6 +1,8 @@
-﻿using Code.Services.Progress;
+﻿using Code.Data;
+using Code.Infrastructure.States.GameStates;
+using Code.Infrastructure.States.StateMachine;
+using Code.Services.Progress;
 using Code.UI.Elements.Buttons;
-using Code.UI.Services.Factory;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -12,10 +14,14 @@ namespace Code.UI.Windows
     [SerializeField] private TextMeshProUGUI _score;
     [SerializeField] private RestartButton _restartButton;
     private IProgressService _progress;
+    private IGameStateMachine _stateMachine;
 
     [Inject]
-    public void Construct(IProgressService progress) =>
+    public void Construct(IProgressService progress, IGameStateMachine stateMachine)
+    {
+      _stateMachine = stateMachine;
       _progress = progress;
+    }
 
     public void UpdateData() =>
       _score.text = $"{_progress.Progress.WaveData.CurrentWave - 1}";
@@ -32,7 +38,8 @@ namespace Code.UI.Windows
     private void ProcessClick()
     {
       _restartButton.Clicked -= ProcessClick;
-      // StateMachine.Enter<BootstrapState>();
+      _progress.Progress.Reset();
+      _stateMachine.Enter<LevelLoadState, string>(Constants.LevelSceneName);
     }
   }
 }

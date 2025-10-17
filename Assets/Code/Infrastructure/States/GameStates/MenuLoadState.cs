@@ -1,4 +1,5 @@
-﻿using Code.Infrastructure.Factory;
+﻿using Code.Data;
+using Code.Infrastructure.Factory;
 using Code.Infrastructure.Loading;
 using Code.Infrastructure.States.StateMachine;
 using Code.Infrastructure.States.StatesInfrastructure;
@@ -9,7 +10,6 @@ namespace Code.Infrastructure.States.GameStates
 {
   public class MenuLoadState : IState
   {
-    private const string MenuSceneName = "Menu";
     private readonly IGameStateMachine _stateMachine;
     private readonly ISceneLoader _sceneLoader;
     private readonly ILoadingCurtain _curtain;
@@ -30,7 +30,7 @@ namespace Code.Infrastructure.States.GameStates
     {
       _curtain.Show();
       _gameFactory.CleanUp();
-      _sceneLoader.Load(MenuSceneName, OnLoaded).Forget();
+      _sceneLoader.Load(Constants.MenuSceneName, OnLoaded).Forget();
     }
 
     public void Exit()

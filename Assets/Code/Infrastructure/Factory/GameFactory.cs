@@ -19,12 +19,13 @@ namespace Code.Infrastructure.Factory
   public class GameFactory : IGameFactory
   {
     public Transform HeroTransform { get; set; }
-    public HeroDeath HeroDeath { get; set; }
     public RectTransform UIRoot { get; set; }
     public Transform StartPoint { get; set; }
     public Transform ProjectilesPool { get; set; }
     public Camera MainCamera { get; set; }
     public CinemachineVirtualCamera VirtualCamera { get; set; }
+
+    private HeroDeath _heroDeath;
 
     private readonly IAssets _assets;
     private readonly IRandomService _random;
@@ -110,7 +111,7 @@ namespace Code.Infrastructure.Factory
       if (go.TryGetComponent<HeroDeath>(out var death))
       {
         death.Construct(_progress.Progress);
-        HeroDeath = death;
+        _heroDeath = death;
         _progress.TrackHeroDeath(death);
       }
       if (go.TryGetComponent<HeroShoot>(out var shoot))
@@ -153,6 +154,10 @@ namespace Code.Infrastructure.Factory
 
     public void CleanUp()
     {
+      _bulletsPool.Clear();
+      _enemySmallPool.Clear();
+      _enemyBigPool.Clear();
+      _enemyRangedPool.Clear();
     }
 
     private GameObject CreateEnemy(EnemyTypeId type, Transform at)
@@ -164,7 +169,7 @@ namespace Code.Infrastructure.Factory
       if (go.TryGetComponent<EnemyMove>(out var move))
       {
         move.HeroTransform = HeroTransform;
-        move.HeroDeath = HeroDeath;
+        move.HeroDeath = _heroDeath;
         move.Construct(_async);
         move.Init().Forget();
       }

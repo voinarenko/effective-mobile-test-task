@@ -1,4 +1,5 @@
-﻿using Code.Infrastructure.Factory;
+﻿using Code.Actors.Interfaces;
+using Code.Infrastructure.Factory;
 using Code.Services.Async;
 using Code.Services.Input;
 using Cysharp.Threading.Tasks;
@@ -39,6 +40,7 @@ namespace Code.Actors.Hero
       var attack = _input.GetActions().Player.Attack;
       attack.performed -= OnAttackPressed;
       attack.canceled -= OnAttackReleased;
+      DOTween.KillAll();
     }
 
     public void Init()
@@ -70,6 +72,8 @@ namespace Code.Actors.Hero
 
     private void Fire()
     {
+      if (!_shootPoint) return;
+      
       var origin = _shootPoint.position;
       var direction = _shootPoint.forward;
       Vector3 target;

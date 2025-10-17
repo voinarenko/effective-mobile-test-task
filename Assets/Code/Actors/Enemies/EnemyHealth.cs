@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Code.Actors.Interfaces;
+using System;
 using UnityEngine;
 
 namespace Code.Actors.Enemies

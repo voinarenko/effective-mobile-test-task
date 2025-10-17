@@ -1,4 +1,5 @@
 ﻿using Code.Actors.Enemies.Interfaces;
+using Code.Actors.Interfaces;
 using Code.Infrastructure.Factory;
 using DG.Tweening;
 using UnityEngine;

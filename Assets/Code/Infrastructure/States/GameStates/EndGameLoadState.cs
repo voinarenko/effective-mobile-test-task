@@ -1,4 +1,5 @@
-﻿using Code.Infrastructure.Factory;
+﻿using Code.Data;
+using Code.Infrastructure.Factory;
 using Code.Infrastructure.Loading;
 using Code.Infrastructure.States.StateMachine;
 using Code.Infrastructure.States.StatesInfrastructure;
@@ -10,7 +11,6 @@ namespace Code.Infrastructure.States.GameStates
 {
   public class EndGameLoadState : IState
   {
-    private const string EndGameSceneName = "EndGame";
     private readonly IGameStateMachine _stateMachine;
     private readonly ISceneLoader _sceneLoader;
     private readonly ILoadingCurtain _curtain;
@@ -31,7 +31,7 @@ namespace Code.Infrastructure.States.GameStates
     {
       _curtain.Show();
       _gameFactory.CleanUp();
-      _sceneLoader.Load(EndGameSceneName, OnLoaded).Forget();
+      _sceneLoader.Load(Constants.EndGameSceneName, OnLoaded).Forget();
     }
 
     public void Exit()

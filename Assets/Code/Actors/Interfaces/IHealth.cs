@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Code.Actors
+﻿namespace Code.Actors.Interfaces
 {
   public interface IHealth
   {

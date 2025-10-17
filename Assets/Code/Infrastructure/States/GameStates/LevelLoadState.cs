@@ -16,7 +16,6 @@ namespace Code.Infrastructure.States.GameStates
 {
   public class LevelLoadState : IPayloadedState<string>
   {
-    private const string SceneNamePrefix = "Level";
     private readonly IGameStateMachine _stateMachine;
     private readonly ISceneLoader _sceneLoader;
     private readonly ILoadingCurtain _curtain;

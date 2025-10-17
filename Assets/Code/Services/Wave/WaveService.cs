@@ -11,14 +11,14 @@ namespace Code.Services.Wave
 
     private readonly IProgressService _progress;
 
-    public WaveService(IProgressService progress) =>
-      _progress = progress;
-
-    public void Init()
+    public WaveService(IProgressService progress)
     {
+      _progress = progress;
       _progress.Progress.WaveData.EnemyChanged += CheckEnemies;
-      SpawnEnemies();
     }
+
+    public void Init() =>
+      SpawnEnemies();
 
     public void Dispose() =>
       _progress.Progress.WaveData.EnemyChanged -= CheckEnemies;

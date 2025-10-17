@@ -7,7 +7,6 @@ namespace Code.Infrastructure.States.GameStates
 {
   public class ProgressLoadState : IState
   {
-    private const string LevelName = "Level";
     private readonly IGameStateMachine _stateMachine;
     private readonly IProgressService _progress;
 
@@ -20,7 +19,7 @@ namespace Code.Infrastructure.States.GameStates
     public void Enter()
     {
       InitProgress();
-      _stateMachine.Enter<LevelLoadState, string>(LevelName);
+      _stateMachine.Enter<LevelLoadState, string>(Constants.LevelSceneName);
     }
 
     public void Exit()
