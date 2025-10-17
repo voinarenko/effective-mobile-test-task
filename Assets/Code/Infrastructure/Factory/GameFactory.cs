@@ -75,7 +75,7 @@ namespace Code.Infrastructure.Factory
       var go = _assets.Instantiate(AssetPath.HUDPath, UIRoot);
       if (go.TryGetComponent<HeadUpDisplay>(out var display))
       {
-        display.Construct(_progress.Progress);
+        display.Construct(_progress.Progress, _staticData);
         display.Init();
       }
       return go;

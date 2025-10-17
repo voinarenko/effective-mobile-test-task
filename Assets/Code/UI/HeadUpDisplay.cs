@@ -1,7 +1,9 @@
 ﻿using Code.Data;
+using Code.Services.StaticData;
 using Code.UI.Elements;
-using System;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Code.UI
 {
@@ -10,11 +12,16 @@ namespace Code.UI
     [SerializeField] private HealthBar _healthBar;
     [SerializeField] private Counter _wavesCounter;
     [SerializeField] private Counter _enemiesCounter;
-    
-    private PlayerProgress _progress;
+    [SerializeField] private Image _waveTimer;
 
-    public void Construct(PlayerProgress progress) =>
+    private PlayerProgress _progress;
+    private IStaticDataService _staticData;
+
+    public void Construct(PlayerProgress progress, IStaticDataService staticData)
+    {
       _progress = progress;
+      _staticData = staticData;
+    }
 
     private void OnDestroy()
     {
@@ -28,6 +35,7 @@ namespace Code.UI
       UpdateHealth();
       _wavesCounter.UpdateCounter(_progress.WaveData.CurrentWave);
       _enemiesCounter.UpdateCounter(_progress.WaveData.CurrentEnemies);
+      ShowWaveTimer();
       _progress.HealthChanged += UpdateHealth;
       _progress.WaveData.WaveChanged += UpdateWavesCounter;
       _progress.WaveData.EnemyChanged += UpdateEnemiesCounter;
@@ -39,7 +47,16 @@ namespace Code.UI
     private void UpdateEnemiesCounter(int count) =>
       _enemiesCounter.UpdateCounter(count);
 
-    private void UpdateWavesCounter(int count) =>
+    private void UpdateWavesCounter(int count)
+    {
       _wavesCounter.UpdateCounter(count);
+      ShowWaveTimer();
+    }
+
+    private void ShowWaveTimer() =>
+      _waveTimer
+        .DOFillAmount(1, _staticData.GetLevel().WavePause)
+        .SetEase(Ease.Linear)
+        .OnComplete(() => _waveTimer.fillAmount = 0);
   }
 }
