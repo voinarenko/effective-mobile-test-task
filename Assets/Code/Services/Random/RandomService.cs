@@ -16,6 +16,7 @@ namespace Code.Services.Random
 
     public void FillWeights(Dictionary<EnemyTypeId, EnemyStaticData> data)
     {
+      _enemyValues.Clear();
       foreach (var pair in data)
         _enemyValues.Add(new WeightedValue { Value = pair.Key, Weight = pair.Value.SpawnWeight });
     }

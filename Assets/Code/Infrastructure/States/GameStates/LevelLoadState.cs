@@ -15,8 +15,6 @@ namespace Code.Infrastructure.States.GameStates
     private readonly IGameFactory _gameFactory;
     private readonly IWaveService _wave;
 
-    private int _previousBlockType;
-
     public LevelLoadState(IGameStateMachine stateMachine, ISceneLoader sceneLoader, ILoadingCurtain curtain,
       IGameFactory gameFactory, IWaveService wave)
     {

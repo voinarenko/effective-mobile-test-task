@@ -46,6 +46,7 @@ namespace Code.Actors.Enemies
         .DOMove(target, _bulletSpeed)
         .SetSpeedBased()
         .SetEase(Ease.Linear)
+        .SetLink(bullet, LinkBehaviour.KillOnDisable)
         .OnComplete(() => _gameFactory.PutBullet(bullet));
 
       _audio.Shoot();

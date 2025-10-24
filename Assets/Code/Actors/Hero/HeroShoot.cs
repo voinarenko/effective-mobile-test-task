@@ -104,6 +104,7 @@ namespace Code.Actors.Hero
         .DOMove(target, BulletSpeed)
         .SetSpeedBased()
         .SetEase(Ease.Linear)
+        .SetLink(bullet, LinkBehaviour.KillOnDisable)
         .OnComplete(() => _gameFactory.PutBullet(bullet));
 
       _heroAudio.Shoot();

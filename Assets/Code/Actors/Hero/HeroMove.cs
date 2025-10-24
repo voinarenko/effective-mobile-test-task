@@ -35,7 +35,10 @@ namespace Code.Actors.Hero
     {
       var move = new Vector3(_move.x, 0, _move.y);
       move = MainCamera.transform.forward * move.z + MainCamera.transform.right * move.x;
-      transform.position += move * (Speed * _time.DeltaTime());
+      move.y = 0;
+      move.Normalize();
+
+      _agent.Move(move * (Speed * _time.DeltaTime()));
     }
   }
 }
