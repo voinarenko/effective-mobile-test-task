@@ -24,10 +24,10 @@
 
 # Комментарий от проверяющего:
 ## Минусы:
-# HeroShoot.OnDestroy вызывает DOTween.KillAll (рубит чужие твины) - 
-# HeroMove двигает transform при наличии NavMeshAgent - ***исправлено***
-# неиспользуемые OnDeath в Enemy/EnemyDeath - ***используются аним-ивентом***
-# мёртвая _previousBlockType в LevelLoadState - ***исправлено***
-# твины «пули» без ID/линков (висят при уничтожении хоста) - ***исправлено***
-# RandomService.FillWeights не чистит список при повторном вызове, - ***вызывается только один раз, но исправлено***
-# AssetProvider не проверяет null из Resources.Load - ***исправлено***
+### HeroShoot.OnDestroy вызывает DOTween.KillAll (рубит чужие твины) - 
+### HeroMove двигает transform при наличии NavMeshAgent - ***исправлено***
+### неиспользуемые OnDeath в Enemy/EnemyDeath - ***используются аним-ивентом***
+### мёртвая _previousBlockType в LevelLoadState - ***исправлено***
+### твины «пули» без ID/линков (висят при уничтожении хоста) - ***исправлено***
+### RandomService.FillWeights не чистит список при повторном вызове, - ***вызывается только один раз, но исправлено***
+### AssetProvider не проверяет null из Resources.Load - ***исправлено***
