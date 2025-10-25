@@ -8,9 +8,10 @@ namespace Code.Services.Progress
 {
   public class ProgressService : IProgressService, IDisposable
   {
-    private HeroDeath _heroDeath;
-    private readonly IGameStateMachine _stateMachine;
     public PlayerProgress Progress { get; set; }
+
+    private readonly IGameStateMachine _stateMachine;
+    private HeroDeath _heroDeath;
 
     public ProgressService(IGameStateMachine stateMachine) =>
       _stateMachine = stateMachine;

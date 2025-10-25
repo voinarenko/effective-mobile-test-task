@@ -6,7 +6,6 @@ using Code.Services.Input;
 using Code.Services.StaticData;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -49,7 +48,6 @@ namespace Code.Actors.Hero
       attack.performed -= OnAttackPressed;
       attack.canceled -= OnAttackReleased;
       _progress.WaveData.WaveChanged -= IncreaseDamage;
-      DOTween.KillAll();
     }
 
     public void Init()

@@ -21,11 +21,13 @@ namespace Code.Services.Wave
       _progress = progress;
       _async = async;
       _staticData = staticData;
-      _progress.Progress.WaveData.EnemyChanged += CheckEnemies;
     }
 
-    public void Init() =>
+    public void Init()
+    {
+      _progress.Progress.WaveData.EnemyChanged += CheckEnemies;
       SpawnEnemies().Forget();
+    }
 
     public void Dispose() =>
       _progress.Progress.WaveData.EnemyChanged -= CheckEnemies;

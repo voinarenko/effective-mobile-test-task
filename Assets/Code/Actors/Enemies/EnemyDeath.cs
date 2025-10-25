@@ -70,8 +70,5 @@ namespace Code.Actors.Enemies
 
     private void UpdateGlobalData() =>
       _progress.WaveData.RemoveEnemy();
-
-    private void OnDeath() =>
-      _agent.isStopped = true;
   }
 }
